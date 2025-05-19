@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-gray-50">
+  <!-- <main class="bg-gray-50"> -->
     <!-- Hero Section -->
     <section class="relative h-[500px] flex items-center justify-center mb-16 overflow-hidden">
       <!-- 배경 이미지 (object-cover로 비율 유지) -->
@@ -55,7 +55,7 @@
 
     <!-- 뉴스 영역 -->
     <NewsSection />
-  </main>
+  <!-- </main> -->
 </template>
 
 <script setup>
