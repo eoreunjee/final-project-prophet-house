@@ -18,39 +18,31 @@
         </div>
 
         <div class="flex gap-4 flex-nowrap">
-  <!-- 시/도 -->
-  <div class="w-[160px]">
-    <label class="block text-sm text-gray-600 mb-1">시/도</label>
-    <select class="w-full border px-3 py-2 rounded text-sm">
-      <option>시/도 선택</option>
-    </select>
-  </div>
+          <!-- 시/도 -->
+          <div class="w-[160px]">
+            <label class="block text-sm text-gray-600 mb-1">시/도</label>
+            <select class="w-full border px-3 py-2 rounded text-sm">
+              <option>시/도 선택</option>
+            </select>
+          </div>
 
-  <!-- 군/구 -->
-  <div class="w-[180px]">
-    <label class="block text-sm text-gray-600 mb-1">군/구</label>
-    <select class="w-full border px-3 py-2 rounded text-sm">
-      <option>군/구 선택</option>
-    </select>
-  </div>
+          <!-- 군/구 -->
+          <div class="w-[180px]">
+            <label class="block text-sm text-gray-600 mb-1">군/구</label>
+            <select class="w-full border px-3 py-2 rounded text-sm">
+              <option>군/구 선택</option>
+            </select>
+          </div>
 
-  <!-- 동 -->
-  <div class="w-[180px]">
-    <label class="block text-sm text-gray-600 mb-1">동</label>
-    <select class="w-full border px-3 py-2 rounded text-sm">
-      <option>동 선택</option>
-    </select>
-  </div>
-</div>
-
-
-
-
-
-
+          <!-- 동 -->
+          <div class="w-[180px]">
+            <label class="block text-sm text-gray-600 mb-1">동</label>
+            <select class="w-full border px-3 py-2 rounded text-sm">
+              <option>동 선택</option>
+            </select>
+          </div>
+        </div>
       </div>
-
-      
 
       <!-- 지도 숨기기 버튼 -->
       <div class="mt-6">

@@ -1,12 +1,12 @@
 <template>
-  <main class="bg-gray-50 py-12 px-4">
+  <main class="bg-gray-50">
     <!-- Hero Section -->
-    <section class="relative h-80 flex items-center justify-center mb-16 rounded-lg overflow-hidden">
+    <section class="relative h-[500px] flex items-center justify-center mb-16 overflow-hidden">
       <!-- 배경 이미지 (object-cover로 비율 유지) -->
       <img
-        src="https://i.namu.wiki/i/BnK_E5QmDZZBbXqcmhe_2QowGD6omkPOxLVGsdK6TbMtyfsEIsvE9f__XKA8mQ1cClLBtTRNOdsBxFxNwziyuw.webp"
+        src="../assets/main_apartment.png"
         alt="Hero Background"
-        class="absolute inset-0 w-full h-full object-cover"
+        class="absolute inset-0 w-full h-full object-cover object-top"
       />
       <!-- 어두운 오버레이(가독성 향상용, 선택사항) -->
       <div class="absolute inset-0 bg-black bg-opacity-40"></div>
@@ -54,29 +54,12 @@
     </section>
 
     <!-- 뉴스 영역 -->
-    <section class="max-w-6xl mx-auto mb-20">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-bold text-gray-800">부동산 뉴스</h2>
-        <router-link to="/news" class="text-blue-600 text-sm hover:underline"
-          >전체 뉴스 보기</router-link
-        >
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div v-for="n in 6" :key="n" class="p-4 bg-white rounded border shadow-sm">
-          <h3 class="font-semibold text-gray-800 mb-1">뉴스 제목 {{ n }}</h3>
-          <p class="text-sm text-gray-600 mb-2">
-            이곳에 간단한 뉴스 요약이 들어갑니다. 실제 뉴스 데이터로 교체하세요.
-          </p>
-          <p class="text-xs text-gray-400">2025-05-19</p>
-        </div>
-      </div>
-    </section>
-
+    <NewsSection />
   </main>
 </template>
 
 <script setup>
-// 실제 뉴스 리스트는 props 또는 API로 대체 가능
+import NewsSection from '@/components/NewsSection.vue'
 </script>
 
 <style scoped></style>
