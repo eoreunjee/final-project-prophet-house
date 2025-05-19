@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* src/assets/base.css 또는 전역 css 파일 */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+
 /* #app {
   max-width: 1280px;
   margin: 0 auto;

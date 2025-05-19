@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center min-h-screen bg-gray-50">
+  <div class="flex justify-center items-center min-h-screen bg-gray-50 overflow-hidden">
     <fieldset class="w-full max-w-sm p-6 bg-white rounded-lg shadow-md border border-gray-200">
       <legend class="text-2xl black font-bold text-center mb-4">로그인</legend>
       <form class="space-y-4">
