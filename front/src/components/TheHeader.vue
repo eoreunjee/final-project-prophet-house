@@ -19,20 +19,24 @@
 
     <!-- 오른쪽: 로그인/회원가입 -->
     <div class="flex items-center space-x-4 text-sm">
-      <router-link
-        to="/login"
+      <button
         class="text-gray-800 hover:text-[#4DA1F5] hover:no-underline no-underline"
-      >로그인</router-link>
-      <router-link
-        to="/signup"
-        class="text-gray-800 hover:text-[#4DA1F5] hover:no-underline no-underline"
-      >회원가입</router-link>
+        @click="showLogin = true"
+      >로그인/회원가입</button>
     </div>
+
+    <!-- 로그인 모달 팝업 -->
+    <LoginModal v-if="showLogin" @close="showLogin = false" />
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+// 로그인 모달 상태
+const showLogin = ref(false)
 
+// LoginModal 컴포넌트 임포트
+import LoginModal from './LoginModal.vue'
 </script>
 
 <style lang="scss" scoped>

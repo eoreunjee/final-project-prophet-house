@@ -1,71 +1,83 @@
 <template>
   <div class="flex justify-center items-center min-h-screen bg-gray-50">
-    <div class="w-full max-w-2xl bg-white p-8 rounded-lg shadow-md border border-gray-200">
-      <h2 class="text-2xl font-bold text-center text-blue-600 mb-2">회원가입</h2>
-      <p class="text-center text-sm text-gray-500 mb-6">부동산 정보 플랫폼의 회원이 되어 다양한 서비스를 이용해보세요.</p>
+    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md border border-gray-200">
+      <!-- 프로필 이미지 -->
+      <div class="flex flex-col items-center mb-8">
+        <img src="https://via.placeholder.com/100" alt="프로필" class="w-24 h-24 rounded-full mb-3" />
+        <label class="inline-block cursor-pointer bg-[#189dfb] hover:bg-[#0073e9] text-white text-sm py-1 px-3 rounded">
+          프로필 사진 업로드
+          <input type="file" accept="image/*" class="hidden" />
+        </label>
+      </div>
 
-      <form class="space-y-6">
-        <!-- 프로필 이미지 -->
-        <div class="flex flex-col items-center">
-          <img src="https://via.placeholder.com/100" alt="프로필" class="w-24 h-24 rounded-full mb-2" />
-          <label class="inline-block cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-sm py-1 px-3 rounded">
-            프로필 사진 업로드
-            <input type="file" accept="image/*" class="hidden" />
+      <form class="space-y-5">
+        <!-- 이름 -->
+        <div>
+          <label class="block mb-1 text-sm font-bold text-gray-700">
+            이름<span class="text-[#ff4d4f]">*</span>
           </label>
+          <input type="text" placeholder="이름을 입력해 주세요."
+                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#0073e9]" />
         </div>
 
-        <!-- 2열 입력 폼 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- 이름 -->
-          <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">이름</label>
-            <input type="text" placeholder="이름" class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" />
-          </div>
+        <!-- 아이디 -->
+        <div>
+          <label class="block mb-1 text-sm font-bold text-gray-700">
+            아이디<span class="text-[#ff4d4f]">*</span>
+          </label>
+          <input type="text" placeholder="아이디를 입력해 주세요."
+                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#0073e9]" />
+        </div>
 
-          <!-- 생년월일 -->
-          <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">생년월일</label>
-            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" />
-          </div>
+        <!-- 이메일 -->
+        <div>
+          <label class="block mb-1 text-sm font-bold text-gray-700">
+            이메일<span class="text-[#ff4d4f]">*</span>
+          </label>
+          <input type="email" placeholder="이메일을 입력해 주세요."
+                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#0073e9]" />
+        </div>
 
-          <!-- 이메일 -->
-          <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">이메일</label>
-            <input type="email" placeholder="example@email.com" class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" />
-          </div>
+        <!-- 비밀번호 -->
+        <div>
+          <label class="block mb-1 text-sm font-bold text-gray-700">
+            비밀번호<span class="text-[#ff4d4f]">*</span>
+          </label>
+          <input type="password" placeholder="비밀번호를 입력해 주세요."
+                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#0073e9]" />
+          <p class="text-xs text-gray-400 mt-1">
+            비밀번호는 영문, 숫자, 특수문자를 조합하여 8자 이상 입력해 주세요.
+          </p>
+        </div>
 
-          <!-- 아이디 -->
-          <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">아이디</label>
-            <input type="text" placeholder="아이디" class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" />
-          </div>
+        <!-- 비밀번호 확인 -->
+        <div>
+          <label class="block mb-1 text-sm font-bold text-gray-700">
+            비밀번호 확인<span class="text-[#ff4d4f]">*</span>
+          </label>
+          <input type="password" placeholder="비밀번호를 입력해 주세요."
+                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#0073e9]" />
+        </div>
 
-          <!-- 비밀번호 -->
-          <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">비밀번호</label>
-            <input type="password" placeholder="비밀번호" class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" />
-          </div>
-
-          <!-- 비밀번호 확인 -->
-          <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">비밀번호 확인</label>
-            <input type="password" placeholder="비밀번호 확인" class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" />
-          </div>
+        <!-- 생년월일 -->
+        <div>
+          <label class="block mb-1 text-sm font-bold text-gray-700">
+            생년월일<span class="text-[#ff4d4f]">*</span>
+          </label>
+          <input type="text" placeholder="생년월일을 입력해 주세요.(19800101)"
+                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#0073e9]" />
         </div>
 
         <!-- 가입 버튼 -->
-        <div>
-          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded">
-            가입하기
-          </button>
-        </div>
+        <button type="submit"
+                class="w-full bg-[#189dfb] hover:bg-[#0073e9] text-white font-semibold py-2 rounded mt-2">
+          가입 완료하기
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script setup>
-// 추후 v-model, 유효성 검사 추가 가능
+// 추후 v-model, 유효성 검사 등 추가 가능
 </script>
-
-<style scoped></style>
