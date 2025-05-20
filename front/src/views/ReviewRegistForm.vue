@@ -67,7 +67,7 @@ function submitReview() {
   // 실제로는 API로 전송
   alert('후기가 등록되었습니다!')
   // 후기 게시판으로 이동 (예: /reviews)
-  router.push('/reviews')
+  router.push('/reviews/list')
 }
 
 function cancel() {
