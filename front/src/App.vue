@@ -14,7 +14,6 @@
 </template>
 
 <script setup>
-// 특별한 로직 없음
 import  TheHeader  from '@/components/TheHeader.vue'
 import  TheFooter  from '@/components/TheFooter.vue'
 </script>

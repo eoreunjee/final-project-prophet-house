@@ -49,13 +49,20 @@
         <button class="text-sm text-blue-600 hover:underline">지도 숨기기</button>
       </div>
     </section>
-
-    <!-- 지도 자리 -->
-    <section class="mb-10">
-      <div class="w-full h-[400px] bg-gray-200 rounded-lg flex items-center justify-center text-gray-500 text-sm">
-        [ 지도 들어갈 자리 ]
-      </div>
+    <section>
+      <KakaoMap
+        :lat="coordinate.lat"
+        :lng="coordinate.lng"
+        :draggable="true"
+        width="100%"
+        class="px-6 py-4 rounded mb-6">
+        <KakaoMapMarker :lat="coordinate.lat" :lng="coordinate.lng"></KakaoMapMarker>
+      </KakaoMap>
     </section>
+    <!-- 지도 자리 -->
+    <!-- <section class="mb-10 h-[500px] bg-gray-600">
+      
+    </section> -->
 
     <!-- 실거래가 예측 안내 -->
     <section class="bg-blue-50 border-l-4 border-blue-400 text-blue-700 px-6 py-4 rounded mb-6">
@@ -82,7 +89,15 @@
 </template>
 
 <script setup>
-// 추후 props 또는 fetch로 데이터 연결 가능
+import { useKakao } from 'vue3-kakao-maps/@utils';
+import { KakaoMap,KakaoMapMarker } from 'vue3-kakao-maps';
+
+useKakao(import.meta.env.VITE_KAKAO_MAP_API_KEY);
+
+const coordinate = {
+  lat: 37.566826,
+  lng: 126.9786567
+};
 </script>
 
 <style scoped></style>

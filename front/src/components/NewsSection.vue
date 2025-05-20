@@ -20,7 +20,7 @@
           </button>
         </div>
       </div>
-      <router-link to="/news" class="text-blue-600 text-sm hover:underline">전체 뉴스 보기</router-link>
+      <!-- <router-link to="/news" class="text-blue-600 text-sm hover:underline">전체 뉴스 보기</router-link> -->
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div
