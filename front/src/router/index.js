@@ -16,8 +16,18 @@ const router = createRouter({
     },
     {
       path: '/reviews',
-      name: 'reviews',
-      component: () => import('../views/ReviewsView.vue'),
+      children: [
+        {
+          path: 'list',
+          name: 'list',
+          component: () => import('../views/ReviewList.vue'),
+        },
+        {
+          path: 'regist',
+          name: 'regist',
+          component: () => import('../views/ReviewRegistForm.vue'),
+        }
+      ]
     },
     {
       path: '/login',

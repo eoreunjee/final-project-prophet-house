@@ -7,13 +7,33 @@
     <section class="bg-white border rounded-lg p-6 shadow mb-8">
       <h2 class="text-lg font-semibold mb-4 text-gray-700">검색 옵션</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+        <!-- 이름 검색 -->
+        <div>
+          <input
+            type="text"
+            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-100"
+            placeholder="건물 이름 검색">
+        </div>
+
         <!-- 거래유형 -->
         <div>
           <label class="block text-sm text-gray-600 mb-1">거래 유형</label>
           <div class="flex gap-2">
-            <button class="px-4 py-1 rounded border border-gray-300 text-sm">매매</button>
-            <button class="px-4 py-1 rounded border border-gray-300 text-sm">전세</button>
-            <button class="px-4 py-1 rounded border border-gray-300 text-sm">월세</button>
+            <button
+              class="px-4 py-1 rounded border border-gray-300 text-sm"
+              :class="selectedType === '매매' ? 'bg-blue-100 text-blue-600 border-blue-400' : ''"
+              @click="selectedType = '매매'"
+            >매매</button>
+            <button
+              class="px-4 py-1 rounded border border-gray-300 text-sm"
+              :class="selectedType === '전세' ? 'bg-blue-100 text-blue-600 border-blue-400' : ''"
+              @click="selectedType = '전세'"
+            >전세</button>
+            <button
+              class="px-4 py-1 rounded border border-gray-300 text-sm"
+              :class="selectedType === '월세' ? 'bg-blue-100 text-blue-600 border-blue-400' : ''"
+              @click="selectedType = '월세'"
+            >월세</button>
           </div>
         </div>
 
@@ -46,16 +66,22 @@
 
       <!-- 지도 숨기기 버튼 -->
       <div class="mt-6">
-        <button class="text-sm text-blue-600 hover:underline">지도 숨기기</button>
+        <button
+          class="text-sm text-blue-600 hover:underline"
+          @click="showMap = !showMap"
+        >
+          {{ showMap ? '지도 숨기기' : '지도 보기' }}
+        </button>
       </div>
     </section>
-    <section>
+
+    <section v-show="showMap">
       <KakaoMap
         :lat="coordinate.lat"
         :lng="coordinate.lng"
         :draggable="true"
         width="100%"
-        class="px-6 py-4 rounded mb-6">
+        class="px-6 py-4 rounded mb-6 shadow mb-8">
         <KakaoMapMarker :lat="coordinate.lat" :lng="coordinate.lng"></KakaoMapMarker>
       </KakaoMap>
     </section>
@@ -63,34 +89,22 @@
     <!-- <section class="mb-10 h-[500px] bg-gray-600">
       
     </section> -->
-
-    <!-- 실거래가 예측 안내 -->
-    <section class="bg-blue-50 border-l-4 border-blue-400 text-blue-700 px-6 py-4 rounded mb-6">
-      미래 실거래가 예측 정보를 확인하실 수 있습니다.
+    <section v-if="selectedType === '매매'">
+      <RealpricePrediction />
     </section>
-
-    <!-- 매물 카드 리스트 -->
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div v-for="n in 6" :key="n" class="bg-white border rounded-lg p-5 shadow-sm">
-        <div class="mb-2 font-semibold text-gray-800">강남 신축 아파트</div>
-        <p class="text-sm text-gray-600 mb-1">서울특별시 강남구 테헤란로 123</p>
-        <p class="text-sm text-gray-600">가격: 9억 8000만원</p>
-        <p class="text-sm text-gray-600">면적: 84.12㎡ (25평)</p>
-        <p class="text-sm text-gray-600">구조: 3룸 / 2욕실</p>
-        <p class="text-sm text-gray-600">층수: 12층 / 총 20층</p>
-        <p class="text-sm mt-2 font-medium text-blue-600">예상 미래 시세: 10억 5000만원</p>
-        <div class="mt-4 flex justify-between items-center">
-          <button class="text-sm text-blue-600 hover:underline">상세보기</button>
-          <button class="px-3 py-1 bg-blue-100 text-blue-600 text-sm rounded">연락하기</button>
-        </div>
-      </div>
+    <section v-else-if="selectedType === '전세' || selectedType === '월세'">
+      <JeonsaeSagi />
     </section>
+    
   </div>
 </template>
 
 <script setup>
 import { useKakao } from 'vue3-kakao-maps/@utils';
 import { KakaoMap,KakaoMapMarker } from 'vue3-kakao-maps';
+import { ref } from 'vue';
+import RealpricePrediction from '@/components/RealpricePrediction.vue'
+import JeonsaeSagi from '@/components/JeonsaeSagi.vue'
 
 useKakao(import.meta.env.VITE_KAKAO_MAP_API_KEY);
 
@@ -98,6 +112,9 @@ const coordinate = {
   lat: 37.566826,
   lng: 126.9786567
 };
+
+const showMap = ref(true);
+const selectedType = ref('매매');
 </script>
 
 <style scoped></style>

@@ -3,9 +3,12 @@
     <!-- 제목과 글쓰기 버튼 -->
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-2xl font-bold text-gray-800">후기 게시판</h1>
-      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium">
+      <router-link
+        to="/reviews/regist"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium"
+      >
         후기 작성
-      </button>
+      </router-link>
     </div>
 
     <!-- 후기 리스트 -->

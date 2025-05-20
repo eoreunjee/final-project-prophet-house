@@ -11,7 +11,7 @@
               class="text-gray-800 hover:text-[#4DA1F5] hover:no-underline no-underline"
             >지역별 매물 검색</router-link>
             <router-link
-              to="/reviews"
+              to="/reviews/list"
               class="text-gray-800 hover:text-[#4DA1F5] hover:no-underline no-underline"
             >후기 게시판</router-link>
           </nav>
