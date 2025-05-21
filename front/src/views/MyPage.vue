@@ -54,18 +54,56 @@
 
     <!-- 내가 쓴 게시글 탭 -->
     <div v-if="tab === 'reviews'" class="space-y-4">
-      <div v-for="review in reviews" :key="review.reviewId" class="p-4 border rounded shadow-sm">
-        <p class="font-semibold">{{ review.location }} - {{ review.dealType }}</p>
-        <p class="text-sm text-gray-600 whitespace-pre-wrap">{{ review.content }}</p>
-      </div>
+      <div
+    v-for="review in reviews"
+    :key="review.reviewId"
+    class="p-4 border rounded shadow-sm bg-white"
+  >
+    <!-- 작성일 -->
+    <div class="flex items-center mb-3">
+      <span class="text-sm text-gray-400">{{ formatDate(review.createdAt) }}</span>
+    </div>
+
+    <!-- 지역, 유형 -->
+    <div class="flex flex-wrap gap-2 mb-4 text-sm">
+      <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">{{ review.location }}</span>
+      <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">{{ review.dealType }}</span>
+    </div>
+
+    <!-- 본문 -->
+    <p class="text-gray-800 whitespace-pre-wrap">{{ review.content }}</p>
+
+    <!-- 댓글 수 -->
+    <router-link
+      :to="`/reviews/detail/${review.reviewId}`"
+      class="text-sm text-blue-500 hover:underline mt-2 inline-block"
+    >
+      댓글 {{ review.commentCount }}
+    </router-link>
+  </div>
     </div>
 
     <!-- 내가 쓴 댓글 탭 -->
     <div v-if="tab === 'comments'" class="space-y-4">
-      <div v-for="comment in comments" :key="comment.commentId" class="p-4 border rounded shadow-sm">
-        <p class="text-sm text-gray-600">{{ comment.content }}</p>
-        <p class="text-xs text-gray-400">작성일: {{ formatDate(comment.createdAt) }}</p>
-      </div>
+    <div
+        v-for="comment in comments"
+        :key="comment.commentId"
+        class="p-4 border rounded shadow-sm bg-white"
+    >
+        <!-- 댓글 본문 -->
+        <p class="text-sm text-gray-800">{{ comment.content }}</p>
+
+        <!-- 작성일 + 원글 이동 링크 -->
+        <div class="mt-2 flex justify-between items-center text-sm text-gray-500">
+        <span>{{ formatDate(comment.createdAt) }}</span>
+        <router-link
+            :to="`/reviews/detail/${comment.reviewId}`"
+            class="text-blue-500 hover:underline"
+        >
+            원글 보기 →
+        </router-link>
+        </div>
+    </div>
     </div>
   </div>
 </template>
@@ -86,32 +124,67 @@ const user = ref({
   joinedAt: ''
 })
 
-// 페이지 마운트 시 사용자 정보 불러오기
+const reviews = ref([])
+const comments = ref([])
+
 onMounted(async () => {
   const token = localStorage.getItem('token')
   if (!token) return alert('로그인이 필요합니다.')
 
   try {
-    const response = await axios.get('http://localhost:8080/api/user/me', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+    const res = await axios.get('http://localhost:8080/api/user/me', {
+      headers: { Authorization: `Bearer ${token}` }
     })
 
-    const data = response.data
+    const data = res.data
     user.value = {
       id: data.id,
       name: data.name,
       email: data.email,
-      birth: data.birthDate,       // 백엔드에서 birth_date as birthDate로 내려옴
-      joinedAt: data.createdAt?.slice(0, 10)    // created_at as createdAt
+      birth: data.birthDate,
+      joinedAt: data.createdAt?.slice(0, 10)
     }
+
+    // ✅ 본인이 쓴 리뷰 불러오기
+    const reviewRes = await axios.get('http://localhost:8080/api/reviews/myReviews', {
+      params: { userId: data.id },
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    reviews.value = reviewRes.data
+
+    const commentRes = await axios.get('http://localhost:8080/api/reviews/myComments', {
+        params: { userId: data.id },
+        headers: { Authorization: `Bearer ${token}` }
+    })
+    comments.value = commentRes.data
+
 
   } catch (err) {
     console.error('사용자 정보 조회 실패:', err)
     alert('로그인 세션이 만료되었거나 오류가 발생했습니다.')
   }
 })
+
+function formatDate(dateString) {
+  if (!dateString) return '-'
+
+  try {
+    const date = new Date(dateString)
+    date.setTime(date.getTime() + -9 * 60 * 60 * 1000) // KST 보정
+
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hour = String(date.getHours()).padStart(2, '0')
+    const minute = String(date.getMinutes()).padStart(2, '0')
+
+    return `${year}-${month}-${day} ${hour}:${minute}`
+  } catch (e) {
+    return '-'
+  }
+}
+
+
 </script>
 
 <style scoped>
