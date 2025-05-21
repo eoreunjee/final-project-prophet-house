@@ -6,39 +6,61 @@
         <router-link to="/">Prophet House</router-link>
       </h1>
       <nav class="flex space-x-6 text-sm whitespace-nowrap">
-        <router-link
-          to="/searchApart"
-          class="text-gray-800 hover:text-[#4DA1F5] hover:no-underline no-underline"
-        >지역별 매물 검색</router-link>
-        <router-link
-          to="/reviews/list"
-          class="text-gray-800 hover:text-[#4DA1F5] hover:no-underline no-underline"
-        >후기 게시판</router-link>
+        <router-link to="/searchApart" class="text-gray-800 hover:text-[#4DA1F5]">지역별 매물 검색</router-link>
+        <router-link to="/reviews/list" class="text-gray-800 hover:text-[#4DA1F5]">후기 게시판</router-link>
       </nav>
     </div>
 
-    <!-- 오른쪽: 로그인/회원가입 -->
+    <!-- 오른쪽: 로그인 여부에 따라 버튼 분기 -->
     <div class="flex items-center space-x-4 text-sm">
-      <button
-        class="text-gray-800 hover:text-[#4DA1F5] hover:no-underline no-underline"
-        @click="showLogin = true"
-      >로그인/회원가입</button>
+      <template v-if="isLoggedIn">
+        <span class="text-gray-700">{{ username }} 님</span>
+        <button @click="logout" class="text-gray-800 hover:text-red-500">로그아웃</button>
+      </template>
+      <template v-else>
+        <button @click="showLogin = true" class="text-gray-800 hover:text-[#4DA1F5]">
+          로그인/회원가입
+        </button>
+      </template>
     </div>
 
-    <!-- 로그인 모달 팝업 -->
-    <LoginModal v-if="showLogin" @close="showLogin = false" />
+    <!-- 로그인 모달 -->
+    <LoginModal v-if="showLogin" @close="handleLoginModalClose" />
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-// 로그인 모달 상태
-const showLogin = ref(false)
-
-// LoginModal 컴포넌트 임포트
+import { ref, onMounted } from 'vue'
 import LoginModal from './LoginModal.vue'
+
+const showLogin = ref(false)
+const isLoggedIn = ref(false)
+const username = ref('')
+
+// 로그인 상태 체크 (예: localStorage에서 확인)
+onMounted(() => {
+  const storedName = localStorage.getItem('username')
+  if (storedName) {
+    isLoggedIn.value = true
+    username.value = storedName
+  }
+})
+
+// 로그인 모달 닫힌 후 상태 업데이트
+const handleLoginModalClose = () => {
+  showLogin.value = false
+  const storedName = localStorage.getItem('username')
+  if (storedName) {
+    isLoggedIn.value = true
+    username.value = storedName
+  }
+}
+
+// 로그아웃
+const logout = () => {
+  localStorage.removeItem('username')
+  isLoggedIn.value = false
+  username.value = ''
+  alert('로그아웃 되었습니다.')
+}
 </script>
-
-<style lang="scss" scoped>
-
-</style>

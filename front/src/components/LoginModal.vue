@@ -103,27 +103,35 @@
 </template>
 
 <script setup>
-// import axios from 'axios'
+import { ref } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
-// async function onLogin() {
-//   try {
-//     const response = await axios.post('http://localhost:8080/api/auth/login', {
-//       id: id.value,
-//       password: password.value
-//     })
+const emit = defineEmits(['close'])
 
-//     const data = response.data
-//     if (data.success) {
-//       alert("로그인 성공!")
-//       // 필요 시 JWT 저장
-//       // localStorage.setItem("token", data.token)
-//       $emit('close')
-//     } else {
-//       alert("로그인 실패: " + data.message)
-//     }
-//   } catch (error) {
-//     alert("오류 발생: " + error.response?.data?.message || error.message)
-//   }
-// }
+const id = ref('')
+const password = ref('')
+const saveEmail = ref(false)
 
+const router = useRouter()
+
+async function onLogin() {
+  try {
+    const response = await axios.post('http://localhost:8080/api/user/login', {
+      id: id.value,
+      password: password.value
+    })
+
+    alert("로그인 성공!")
+    emit('close')
+    router.push('/')
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      alert("아이디 또는 비밀번호가 올바르지 않습니다.")
+    } else {
+      alert("로그인 중 오류가 발생했습니다.")
+      console.error(error)
+    }
+  }
+}
 </script>
