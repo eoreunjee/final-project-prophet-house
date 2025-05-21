@@ -92,12 +92,18 @@
         :draggable="true"
         width="100%"
         class="px-6 py-4 rounded mb-6 shadow mb-8">
-        <KakaoMapMarker :lat="coordinate.lat" :lng="coordinate.lng"></KakaoMapMarker>
+        <KakaoMapMarker
+          v-for="apt in aptList"
+          :key="apt.aptSeq"
+          :lat="parseFloat(apt.latitude)"
+          :lng="parseFloat(apt.longitude)"
+          ><!--:infoWindow="{ content: apt.aptName}"-->
+        </KakaoMapMarker>
       </KakaoMap>
     </section>
 
     <section v-if="selectedType === '매매'">
-      <RealpricePrediction />
+      <RealpricePrediction :apt-list="aptList" :deal-map="dealMap"/>
     </section>
     <section v-else-if="selectedType === '전세' || selectedType === '월세'">
       <JeonsaeSagi />
@@ -109,17 +115,17 @@
 <script setup>
 import { useKakao } from 'vue3-kakao-maps/@utils';
 import { KakaoMap,KakaoMapMarker } from 'vue3-kakao-maps';
-import { ref, computed } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import axios from 'axios'
 import RealpricePrediction from '@/components/RealpricePrediction.vue'
 import JeonsaeSagi from '@/components/JeonsaeSagi.vue'
 
 useKakao(import.meta.env.VITE_KAKAO_MAP_API_KEY);
 
-const coordinate = {
+const coordinate = reactive({
   lat: 37.566826,
   lng: 126.9786567
-};
+});
 
 const showMap = ref(true);
 const selectedType = ref('매매');
@@ -188,6 +194,11 @@ const searchApt = async () => {
     
     aptList.value = response.data.aptList
     dealMap.value = response.data.dealMap
+
+    if (aptList.value.length > 0) {
+      coordinate.lat = parseFloat(aptList.value[0].latitude)
+      coordinate.lng = parseFloat(aptList.value[0].longitude)
+    }
   } catch (error) {
     console.error('Error searching apartments:', error)
   }
