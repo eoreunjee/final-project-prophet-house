@@ -15,6 +15,17 @@ const router = createRouter({
       component: () => import('../views/SearchApartView.vue'),
     },
     {
+      path: '/user',
+      children: [
+        {
+          path: 'myPage',
+          name: 'myPage',
+          component: () => import('@/views/MyPage.vue')
+        }
+      ]
+
+    },
+    {
       path: '/reviews',
       children: [
         {

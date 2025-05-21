@@ -15,6 +15,13 @@
     <div class="flex items-center space-x-4 text-sm">
       <template v-if="username">
         <span class="text-gray-700">{{ username }} 님</span>
+        <!-- ✅ 마이페이지 버튼 추가 -->
+        <router-link
+          to="/user/myPage"
+          class="text-gray-800 hover:text-[#4DA1F5]"
+        >
+          마이페이지
+        </router-link>
         <button @click="logout" class="text-gray-800 hover:text-red-500">로그아웃</button>
       </template>
       <template v-else>
