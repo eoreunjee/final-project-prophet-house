@@ -178,7 +178,7 @@ const loadDong = async () => {
 
 const searchApt = async () => {
   try {
-    const response = await axios.get('/api/search/apt', {
+    const response = await axios.get('http://localhost:8080/api/search/apt', {
       params: {
         sido: selectedSido.value,
         gugun: selectedGugun.value,

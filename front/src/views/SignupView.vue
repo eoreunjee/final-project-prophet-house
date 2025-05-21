@@ -2,12 +2,8 @@
   <div class="flex justify-center items-center min-h-screen bg-gray-50">
     <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md border border-gray-200">
       <!-- 프로필 이미지 -->
-      <div class="flex flex-col items-center mb-8">
-        <img src="https://via.placeholder.com/100" alt="프로필" class="w-24 h-24 rounded-full mb-3" />
-        <label class="inline-block cursor-pointer bg-[#189dfb] hover:bg-[#0073e9] text-white text-sm py-1 px-3 rounded">
-          프로필 사진 업로드
-          <input type="file" accept="image/*" class="hidden" />
-        </label>
+      <div class="text-2xl flex justify-center mb-6 font-bold text-[#4DA1F5]">
+        회원가입
       </div>
 
       <form class="space-y-5">
