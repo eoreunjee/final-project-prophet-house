@@ -32,7 +32,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { username } from '@/utils/auth'
+import { userId, username } from '@/utils/auth'
 import LoginModal from './LoginModal.vue'
 
 const router = useRouter()
@@ -41,6 +41,7 @@ const showLoginModal = ref(false)
 function logout() {
   localStorage.removeItem('token')
   username.value = null
+  userId.value = null
   router.push('/')
 }
 

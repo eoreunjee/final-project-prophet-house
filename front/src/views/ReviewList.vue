@@ -12,41 +12,92 @@
     </div>
 
     <!-- 후기 리스트 -->
-    <div class="space-y-4">
-      <!-- 후기 1 -->
-      <div class="p-4 border rounded shadow-sm bg-white">
-        <div class="flex justify-between items-center mb-2">
-          <span class="font-semibold text-gray-700">홍길동</span>
-          <span class="text-sm text-gray-400">2025-05-19</span>
+    <div class="space-y-4 mb-6">
+      <div
+        v-for="review in pagedReviews"
+        :key="review.reviewId"
+        class="p-4 border rounded shadow-sm bg-white"
+      >
+        <!-- 작성자 + 작성일 -->
+        <div class="flex items-center mb-3">
+          <span class="text-gray-800 font-semibold mr-3">{{ review.userId }}</span>
+          <span class="text-sm text-gray-400">{{ formatDate(review.createdAt )}}</span>
         </div>
-        <p class="text-gray-800">
-          이 사이트 덕분에 전세 사기 안 당하고 좋은 집 구했어요! 정말 감사합니다 👍
-        </p>
-      </div>
 
-      <!-- 후기 2 -->
-      <div class="p-4 border rounded shadow-sm bg-white">
-        <div class="flex justify-between items-center mb-2">
-          <span class="font-semibold text-gray-700">김부동</span>
-          <span class="text-sm text-gray-400">2025-05-17</span>
+        <!-- 지역, 유형 -->
+        <div class="flex flex-wrap gap-2 mb-7 text-sm">
+          <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">{{ review.location }}</span>
+          <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">{{ review.dealType }}</span>
         </div>
-        <p class="text-gray-800">주변 시세보다 저렴한 매물을 찾을 수 있어서 만족스러웠습니다.</p>
-      </div>
 
-      <!-- 후기 3 -->
-      <div class="p-4 border rounded shadow-sm bg-white">
-        <div class="flex justify-between items-center mb-2">
-          <span class="font-semibold text-gray-700">이후기</span>
-          <span class="text-sm text-gray-400">2025-05-14</span>
-        </div>
-        <p class="text-gray-800">사용자 인터페이스가 직관적이고 검색이 쉬워요. 추천합니다!</p>
+        <!-- 본문 -->
+        <p class="text-gray-800 whitespace-pre-wrap">{{ review.content }}</p>
+        <router-link :to="`/reviews/detail/${review.reviewId}`" class="text-sm text-blue-500 hover:underline">
+          댓글 {{ review.commentCount }}
+        </router-link>
       </div>
+    </div>
+
+    <!-- 페이지네이션 -->
+    <div class="flex justify-center space-x-2">
+      <button
+        v-for="page in totalPages"
+        :key="page"
+        @click="currentPage = page"
+        :class="[
+          'px-3 py-1 rounded',
+          currentPage === page ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'
+        ]"
+      >
+        {{ page }}
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
-// 향후: 후기 목록 API로 받아오기 / 작성 페이지로 라우팅
+import { ref, computed, onMounted } from 'vue'
+import axios from 'axios'
+
+const reviews = ref([])
+const currentPage = ref(1)
+const pageSize = 7
+
+onMounted(async () => {
+  try {
+    const res = await axios.get('http://localhost:8080/api/reviews')
+    reviews.value = res.data
+  } catch (err) {
+    console.error('후기 목록 불러오기 실패', err)
+  }
+})
+
+const totalPages = computed(() => Math.ceil(reviews.value.length / pageSize))
+
+const pagedReviews = computed(() => {
+  const start = (currentPage.value - 1) * pageSize
+  return reviews.value.slice(start, start + pageSize)
+})
+
+function formatDate(dateString) {
+  if (!dateString) return '-'
+
+  try {
+    const date = new Date(dateString)
+    // UTC → KST 보정
+    date.setTime(date.getTime() + -9 * 60 * 60 * 1000)
+
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hour = String(date.getHours()).padStart(2, '0')
+    const minute = String(date.getMinutes()).padStart(2, '0')
+
+    return `${year}-${month}-${day} ${hour}:${minute}`
+  } catch (e) {
+    return '-'
+  }
+}
 </script>
 
 <style scoped></style>

@@ -26,6 +26,16 @@ const router = createRouter({
           path: 'regist',
           name: 'regist',
           component: () => import('../views/ReviewRegistForm.vue'),
+        },
+        {
+          path: 'detail/:id',
+          name: 'ReviewDetail',
+          component: () => import('../views/ReviewDetail.vue')
+        },
+        {
+          path: 'edit/:id',
+          name: 'ReviewEdit',
+          component: () => import('@/views/ReviewEdit.vue')
         }
       ]
     },
