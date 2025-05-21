@@ -106,6 +106,7 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { setUsernameFromToken } from '@/utils/auth'
 
 const emit = defineEmits(['close'])
 
@@ -120,18 +121,25 @@ async function onLogin() {
     const response = await axios.post('http://localhost:8080/api/user/login', {
       id: id.value,
       password: password.value
-    })
+    });
 
-    alert("로그인 성공!")
-    emit('close')
-    router.push('/')
+    // ✅ 토큰 저장
+    const token = response.data.token;
+    localStorage.setItem('token', token);
+
+    setUsernameFromToken(); // ✅ 로그인 직후 상태 업데이트
+
+    // alert("로그인 성공!");
+    emit('close');
+    router.push('/');
   } catch (error) {
     if (error.response && error.response.status === 401) {
-      alert("아이디 또는 비밀번호가 올바르지 않습니다.")
+      alert("아이디 또는 비밀번호가 올바르지 않습니다.");
     } else {
-      alert("로그인 중 오류가 발생했습니다.")
-      console.error(error)
+      alert("로그인 중 오류가 발생했습니다.");
+      console.error(error);
     }
   }
 }
+
 </script>
