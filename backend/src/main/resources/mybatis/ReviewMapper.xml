@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.mapper.ReviewMapper">
+
+  <insert id="insertReview">
+    INSERT INTO review (user_id, location, deal_type, content)
+    VALUES (#{userId}, #{location}, #{dealType}, #{content})
+  </insert>
+
+  <select id="getAllReviews" resultType="com.ssafy.home.dto.Review">
+    SELECT	review_id as reviewId,
+    		user_id as userId,
+    		location,
+    		deal_type as dealType,
+    		content,
+    		created_at as createdAt,
+    		comment_count as commentCount
+      FROM review ORDER BY created_at DESC
+  </select>
+
+  <select id="getReviewById" parameterType="long" resultType="com.ssafy.home.dto.Review">
+    SELECT	review_id as reviewId,
+    		user_id as userId,
+    		location,
+    		deal_type as dealType,
+    		content,
+    		created_at as createdAt,
+    		comment_count as commentCount
+      FROM review WHERE review_id = #{reviewId}
+  </select>
+  
+  <update id="incrementCommentCount">
+	  UPDATE review SET comment_count = comment_count + 1
+	  WHERE review_id = #{reviewId}
+  </update>
+  
+  <update id="decrementCommentCount">
+	  UPDATE review SET comment_count = comment_count - 1
+	  WHERE review_id = #{reviewId}
+  </update>
+  
+
+  <delete id="deleteReview" parameterType="long">
+    DELETE FROM review WHERE review_id = #{reviewId}
+  </delete>
+  
+	<update id="updateReview">
+	  UPDATE review
+	  SET location = #{location},
+	      deal_type = #{dealType},
+	      content = #{content}
+	  WHERE review_id = #{reviewId}
+	</update>
+	
+	<select id="selectReviewsByUser" resultType="Review">
+	    SELECT	review_id as reviewId,
+	    		user_id as userId,
+	    		location,
+	    		deal_type as dealType,
+	    		content,
+	    		comment_count as commentCount,
+	    		created_at as createdAt
+	    FROM review
+	    WHERE user_id = #{userId}
+	    ORDER BY created_at DESC
+	</select>
+	
+  
+
+</mapper>

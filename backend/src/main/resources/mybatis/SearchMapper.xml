@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.home.mapper.SearchMapper">
+	
+	<!-- 아파트 이름 LIKE 검색 -->
+	<select id="searchAptsByName" resultType="HomeInfo">
+	    SELECT apt_seq, apt_name, build_year, latitude, longitude
+	    FROM apartment
+	    WHERE apt_name LIKE CONCAT('%', #{aptName}, '%')
+	</select>
+	
+	<!-- 거래 내역: 여러 apt_seq에 해당하는 거래 불러오기 -->
+	<select id="selectDealsByAptSeq" resultType="HomeDeal">
+	    SELECT no, apt_seq, apt_dong, floor, deal_year, deal_month, deal_day, deal_amount
+	    FROM deal
+	    WHERE apt_seq IN
+	    <foreach item="seq" collection="aptSeqList" open="(" separator="," close=")">
+	        #{seq}
+	    </foreach>
+	    ORDER BY deal_year DESC, deal_month DESC, deal_day DESC
+	</select>
+	
+</mapper>
