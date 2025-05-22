@@ -12,32 +12,38 @@
     </div>
 
     <!-- 내 정보 탭 -->
-    <div v-if="tab === 'info'" class="space-y-4">
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-semibold">아이디</label>
-          <input type="text" :value="user.id" disabled class="w-full border rounded px-3 py-2 bg-gray-100" />
-        </div>
-        <div>
-          <label class="block text-sm font-semibold">이름</label>
-          <input type="text" :value="user.name" class="w-full border rounded px-3 py-2" />
-        </div>
-        <div>
-          <label class="block text-sm font-semibold">이메일</label>
-          <input type="email" :value="user.email" class="w-full border rounded px-3 py-2" />
-        </div>
-        <div>
-          <label class="block text-sm font-semibold">생일</label>
-          <input type="date" :value="user.birth" class="w-full border rounded px-3 py-2" />
-        </div>
-        <div>
-          <label class="block text-sm font-semibold">가입일</label>
-          <input type="text" :value="user.joinedAt" disabled class="w-full border rounded px-3 py-2 bg-gray-100" />
-        </div>
-        <div>
-          <label class="block text-sm font-semibold">비밀번호</label>
-          <input type="password" value="********" disabled class="w-full border rounded px-3 py-2 bg-gray-100" />
-        </div>
+    <div v-if="tab === 'info'" class="space-y-5">
+      <div class="grid grid-cols-1 gap-3">
+        <form @submit.prevent="updateMyinfo" class="bg-white border rounded shadow-sm p-6 space-y-5">
+          <div>
+            <label class="block text-sm font-semibold">아이디</label>
+            <input type="text" :value="user.id" disabled class="w-full border rounded px-3 py-2 bg-gray-100" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold">이름</label>
+            <input type="text" :value="user.name" class="w-full border rounded px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold">이메일</label>
+            <input type="email" :value="user.email" class="w-full border rounded px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold">생일</label>
+            <input type="date" :value="user.birth" class="w-full border rounded px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold">가입일</label>
+            <input type="text" :value="user.joinedAt" disabled class="w-full border rounded px-3 py-2 bg-gray-100" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold">현재 비밀번호</label>
+            <input type="password" value="********" class="w-full border rounded px-3 py-2 bg-gray-100" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold">변경할 비밀번호</label>
+            <input type="password" value="********" class="w-full border rounded px-3 py-2 bg-gray-100" />
+          </div>
+        </form>
       </div>
       <div class="text-right">
         <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">수정</button>
