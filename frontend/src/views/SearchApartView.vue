@@ -46,6 +46,7 @@
           검색
         </button>
       </div>
+      <RealpricePrediction :apt-list="aptList" :deal-map="dealMap"/>
     </aside>
 
     <!-- 검색 열기 버튼 (닫혀 있을 때만 보임) -->
