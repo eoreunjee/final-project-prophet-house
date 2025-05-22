@@ -183,6 +183,7 @@ function formatDate(dateString) {
 
     return `${year}-${month}-${day} ${hour}:${minute}`
   } catch (e) {
+    console.log('formatDate()에러: ',e);
     return '-'
   }
 }
