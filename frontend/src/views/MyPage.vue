@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-5xl mx-auto p-6">
+  <div class="max-w-2xl mx-auto p-14">
     <h2 class="text-2xl font-bold text-[#4DA1F5] mb-6">마이페이지</h2>
 
     <div class="border-b mb-6">
@@ -46,7 +46,7 @@
         </form>
       </div>
       <div class="text-right">
-        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">수정</button>
+        <button class="bg-[#4DA1F5] hover:bg-[#0DA9FF] text-white px-20 py-3 rounded w-full">수정</button>
       </div>
     </div>
 
