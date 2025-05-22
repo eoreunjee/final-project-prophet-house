@@ -96,7 +96,7 @@ onMounted(async () => {
 
 function formatDate(dateString) {
   const date = new Date(dateString)
-  date.setTime(date.getTime() + 9 * 60 * 60 * 1000)
+  date.setTime(date.getTime() + -9 * 60 * 60 * 1000)
   const y = date.getFullYear()
   const m = String(date.getMonth() + 1).padStart(2, '0')
   const d = String(date.getDate()).padStart(2, '0')
