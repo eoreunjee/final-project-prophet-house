@@ -1,24 +1,12 @@
 <template>
   <div class="max-w-7xl mx-auto px-4 py-10">
     <!-- 제목 -->
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">지역별 매물 검색</h1>
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">매매 실거래가 검색</h1>
 
     <!-- 검색 옵션 박스 -->
     <section class="relative bg-white border rounded-lg p-6 shadow mb-8">
     <h2 class="text-lg font-semibold mb-4 text-gray-700">검색 옵션</h2>
     <div class="flex flex-wrap items-center gap-4">
-      <!-- 거래 유형 -->
-      <div class="flex items-center gap-1">
-        <button
-          v-for="type in ['매매', '전세', '월세']"
-          :key="type"
-          class="px-4 py-1 rounded border border-gray-300 text-sm transition"
-          :class="selectedType === type ? 'bg-blue-100 text-blue-600 border-blue-400' : 'bg-white text-gray-700'"
-          @click="selectedType = type"
-        >{{ type }}</button>
-      </div>
-
-
       <!-- 시/도 -->
       <div>
         <select 
@@ -61,17 +49,18 @@
         <input
           v-model="aptName"
           type="text"
-          class="w-full px-4 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-100"
+          class="w-80 px-4 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-100"
           placeholder="건물 이름 검색"
         />
-      </div>
-
-      <!-- 검색 버튼 -->
+        <!-- 검색 버튼 -->
       <button
         @click="searchApt"
         class="bg-[#338af3] hover:bg-[#2476c9] text-white font-semibold px-10 py-2 rounded transition absolute right-6 bottom-4"
         :disabled="!isSearchEnabled"
       >검색</button>
+      </div>
+
+      
     </div>
 
     <!-- 지도 숨기기 버튼 -->
@@ -102,11 +91,8 @@
       </KakaoMap>
     </section>
 
-    <section v-if="selectedType === '매매'">
+    <section>
       <RealpricePrediction :apt-list="aptList" :deal-map="dealMap"/>
-    </section>
-    <section v-else-if="selectedType === '전세' || selectedType === '월세'">
-      <JeonsaeSagi />
     </section>
     
   </div>

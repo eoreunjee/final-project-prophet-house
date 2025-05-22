@@ -15,11 +15,12 @@
           class="bg-white border rounded-lg p-4 shadow-sm"
         >
           <div class="flex justify-between items-center mb-2">
-            <div class="font-semibold text-lg text-gray-800">{{ apt.aptName }}</div>
+            <div class="font-semibold text-lg text-gray-800">{{ apt.aptName + " "+ dealMap[apt.aptSeq][0].aptDong}}</div>
           </div>
-          <div class="text-sm text-gray-600 mb-1">주소: {{ apt.sidoName }} {{ apt.gugunName }} {{ apt.dongName }}</div>
+          <!-- <div class="text-sm text-gray-600 mb-1"></div> -->
 
           <div v-if="dealMap[apt.aptSeq] && dealMap[apt.aptSeq].length" class="text-sm text-gray-600">
+            {{ dealMap[apt.aptSeq][0].floor }}층 / 전용 면적: {{ dealMap[apt.aptSeq][0].excluUseAr }}㎡ / 
             거래일자: {{ dealMap[apt.aptSeq][0].dealYear }}.{{ dealMap[apt.aptSeq][0].dealMonth }}.{{ dealMap[apt.aptSeq][0].dealDay }} /
             가격: {{ dealMap[apt.aptSeq][0].dealAmount }}만원
           </div>

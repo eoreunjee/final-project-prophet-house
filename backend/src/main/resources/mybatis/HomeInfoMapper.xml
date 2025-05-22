@@ -12,8 +12,9 @@
   <select id="getHousesByDong" resultType="HomeInfo">
     SELECT  h.apt_seq     AS aptSeq,
 			h.apt_nm      AS aptName,
+
     		h.latitude,
-    h.longitude
+    		h.longitude
       FROM houseinfos h
       JOIN dongcodes d
         ON h.sgg_cd = LEFT(d.dong_code,5)

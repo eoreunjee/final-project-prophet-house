@@ -28,9 +28,9 @@ public class SearchController {
 
     @GetMapping("/apt")
     public Map<String, Object> searchApartment(
-            @RequestParam String sido,
-            @RequestParam String gugun,
-            @RequestParam String dong,
+            @RequestParam(required = false) String sido,
+            @RequestParam(required = false) String gugun,
+            @RequestParam(required = false) String dong,
             @RequestParam(required = false) String sort,
             @RequestParam(required = false) String aptName
     ) {

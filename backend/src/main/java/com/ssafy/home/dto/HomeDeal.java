@@ -19,5 +19,6 @@ public class HomeDeal {
     private int dealYear;
     private int dealMonth;
     private int dealDay;
+    private double excluUseAr;
     private String dealAmount;
 }

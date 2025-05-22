@@ -6,8 +6,9 @@
         <router-link to="/">Prophet House</router-link>
       </h1>
       <nav class="flex space-x-6 text-sm whitespace-nowrap">
-        <router-link to="/searchApart" class="text-gray-800 hover:text-[#4DA1F5]">지역별 매물 검색</router-link>
+        <router-link to="/searchApart" class="text-gray-800 hover:text-[#4DA1F5]">매매 실거래가</router-link>
         <router-link to="/reviews/list" class="text-gray-800 hover:text-[#4DA1F5]">후기 게시판</router-link>
+        <router-link to=""></router-link>
       </nav>
     </div>
 

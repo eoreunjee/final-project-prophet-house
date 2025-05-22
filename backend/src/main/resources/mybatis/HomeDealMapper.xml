@@ -5,7 +5,15 @@
 
 <mapper namespace="com.ssafy.home.mapper.HomeDealMapper">
     <select id="getDealsByHouse" resultType="HomeDeal" parameterType="String">
-        SELECT no, apt_seq as aptSeq, apt_dong as aptDong, floor, deal_year as dealYear, deal_month as dealMonth, deal_day as dealDay, deal_amount as dealAmount
+        SELECT	no,
+        		apt_seq as aptSeq,
+        		apt_dong as aptDong,
+        		floor,
+        		deal_year as dealYear,
+        		deal_month as dealMonth,
+        		deal_day as dealDay,
+        		exclu_use_ar as excluUseAr,
+        		deal_amount as dealAmount
         FROM housedeals
         WHERE apt_seq = #{aptSeq}
     </select>

@@ -55,41 +55,41 @@
     <!-- 내가 쓴 게시글 탭 -->
     <div v-if="tab === 'reviews'" class="space-y-4">
       <div
-    v-for="review in reviews"
-    :key="review.reviewId"
-    class="p-4 border rounded shadow-sm bg-white"
-  >
-    <!-- 작성일 -->
-    <div class="flex items-center mb-3">
-      <span class="text-sm text-gray-400">{{ formatDate(review.createdAt) }}</span>
-    </div>
+        v-for="review in reviews"
+        :key="review.reviewId"
+        class="p-4 border rounded shadow-sm bg-white"
+      >
+        <!-- 작성일 -->
+        <div class="flex items-center mb-3">
+          <span class="text-sm text-gray-400">{{ formatDate(review.createdAt) }}</span>
+        </div>
 
-    <!-- 지역, 유형 -->
-    <div class="flex flex-wrap gap-2 mb-4 text-sm">
-      <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">{{ review.location }}</span>
-      <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">{{ review.dealType }}</span>
-    </div>
+        <!-- 지역, 유형 -->
+        <div class="flex flex-wrap gap-2 mb-4 text-sm">
+          <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">{{ review.location }}</span>
+          <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">{{ review.dealType }}</span>
+        </div>
 
-    <!-- 본문 -->
-    <p class="text-gray-800 whitespace-pre-wrap">{{ review.content }}</p>
+        <!-- 본문 -->
+        <p class="text-gray-800 whitespace-pre-wrap">{{ review.content }}</p>
 
-    <!-- 댓글 수 -->
-    <router-link
-      :to="`/reviews/detail/${review.reviewId}`"
-      class="text-sm text-blue-500 hover:underline mt-2 inline-block"
-    >
-      댓글 {{ review.commentCount }}
-    </router-link>
-  </div>
+        <!-- 댓글 수 -->
+        <router-link
+          :to="`/reviews/detail/${review.reviewId}`"
+          class="text-sm text-blue-500 hover:underline mt-2 inline-block"
+        >
+          댓글 {{ review.commentCount }}
+        </router-link>
+      </div>
     </div>
 
     <!-- 내가 쓴 댓글 탭 -->
     <div v-if="tab === 'comments'" class="space-y-4">
-    <div
+      <div
         v-for="comment in comments"
         :key="comment.commentId"
         class="p-4 border rounded shadow-sm bg-white"
-    >
+      >
         <!-- 댓글 본문 -->
         <p class="text-sm text-gray-800">{{ comment.content }}</p>
 
@@ -103,7 +103,7 @@
             원글 보기 →
         </router-link>
         </div>
-    </div>
+      </div>
     </div>
   </div>
 </template>
@@ -183,7 +183,6 @@ function formatDate(dateString) {
     return '-'
   }
 }
-
 
 </script>
 
