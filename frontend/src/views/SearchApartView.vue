@@ -93,6 +93,8 @@ const dongList = ref([])
 const aptList = ref([])
 const dealMap = ref({})
 
+const aptName = ref('')
+
 // Computed properties
 const isSearchEnabled = computed(() => {
   return selectedSido.value && selectedGugun.value && selectedDong.value

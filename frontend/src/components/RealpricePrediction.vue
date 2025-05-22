@@ -40,6 +40,7 @@ defineProps({
 
 <style scoped>
 
+
 /* Chrome, Edge, Safari */
 .custom-scroll::-webkit-scrollbar {
   width: 6px; /* 스크롤바 너비 */

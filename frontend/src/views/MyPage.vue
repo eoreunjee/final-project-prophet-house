@@ -46,6 +46,7 @@
 
     <!-- 찜 목록 탭 -->
     <div v-if="tab === 'wishlist'" class="space-y-4">
+      <p v-if="wishlist.length < 1">찜한 매물이 없습니다</p>
       <div v-for="item in wishlist" :key="item.id" class="p-4 border rounded shadow-sm">
         <p class="font-semibold">{{ item.title }}</p>
         <p class="text-sm text-gray-500">{{ item.address }}</p>
@@ -54,6 +55,7 @@
 
     <!-- 내가 쓴 게시글 탭 -->
     <div v-if="tab === 'reviews'" class="space-y-4">
+      <p v-if="reviews.length < 1">작성한 게시글이 없습니다</p>
       <div
         v-for="review in reviews"
         :key="review.reviewId"
@@ -85,6 +87,7 @@
 
     <!-- 내가 쓴 댓글 탭 -->
     <div v-if="tab === 'comments'" class="space-y-4">
+      <p v-if="comments.length < 1">작성한 댓글이 없습니다</p>
       <div
         v-for="comment in comments"
         :key="comment.commentId"
@@ -123,7 +126,7 @@ const user = ref({
   birth: '',
   joinedAt: ''
 })
-
+const wishlist = ref([])
 const reviews = ref([])
 const comments = ref([])
 
