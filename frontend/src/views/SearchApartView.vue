@@ -10,7 +10,7 @@
       height="100%"
       class="w-full h-full absolute top-0 left-0 z-0">
       <KakaoMapMarker
-        v-for="apt in aptList"
+        v-for="apt in validAptList"
         :key="apt.aptSeq"
         :lat="parseFloat(apt.latitude)"
         :lng="parseFloat(apt.longitude)" />
@@ -148,19 +148,47 @@ const searchApt = async () => {
     aptList.value = response.data.aptList
     dealMap.value = response.data.dealMap
 
-    if (aptList.value.length > 0) {
-      coordinate.lat = parseFloat(aptList.value[0].latitude)
-      coordinate.lng = parseFloat(aptList.value[0].longitude)
+    if (validAptList.value.length > 0) {
+      coordinate.lat = parseFloat(validAptList.value[0].latitude);
+      coordinate.lng = parseFloat(validAptList.value[0].longitude);
+    } else {
+      alert('조회된 매물이 없습니다!')
     }
+
+    console.log("APT 좌표:", aptList.value[0]?.latitude, aptList.value[0]?.longitude);
+
   } catch (error) {
     console.error('Error searching apartments:', error)
   }
 }
 
+const validAptList = computed(() =>
+  aptList.value.filter(
+    apt =>
+      apt.latitude &&
+      apt.longitude &&
+      !isNaN(parseFloat(apt.latitude)) &&
+      !isNaN(parseFloat(apt.longitude))
+  )
+);
+
+
 loadSido()
 </script>
 
 <style scoped>
+/* Chrome, Edge, Safari */
+.custom-scroll::-webkit-scrollbar {
+  width: 6px; /* 스크롤바 너비 */
+}
 
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* 스크롤바 색상 */
+  border-radius: 3px;
+}
 </style>
 
