@@ -161,13 +161,6 @@ loadSido()
 </script>
 
 <style scoped>
-/* Firefox, Edge */
-::-webkit-scrollbar {
-  display: none;
-}
-/* Chrome용도 적용 */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
+
 </style>
 

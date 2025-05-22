@@ -2,7 +2,7 @@
   <div class="flex gap-6 h-full">
 
     <!-- 매물 리스트 -->
-    <section class="overflow-y-auto pr-2 space-y-3">
+    <section class="overflow-y-auto pr-2 space-y-3 custom-scroll">
       <div
         v-for="apt in aptList"
         :key="apt.aptSeq"
@@ -38,6 +38,19 @@ defineProps({
 })
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
+/* Chrome, Edge, Safari */
+.custom-scroll::-webkit-scrollbar {
+  width: 6px; /* 스크롤바 너비 */
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* 스크롤바 색상 */
+  border-radius: 3px;
+}
 </style>
