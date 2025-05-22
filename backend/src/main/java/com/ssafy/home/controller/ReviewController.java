@@ -6,7 +6,6 @@ import com.ssafy.home.dto.ReviewEdit;
 import com.ssafy.home.service.CommentService;
 import com.ssafy.home.service.ReviewService;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;

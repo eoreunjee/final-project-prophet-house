@@ -11,12 +11,10 @@ import com.ssafy.home.mapper.HomeDealMapper;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class HomeDealServiceImpl implements HomeDealService {
-    private HomeDealMapper homeDealDAO;
     
-    public HomeDealServiceImpl(HomeDealMapper homeDealDAO) {
-    	this.homeDealDAO = homeDealDAO;
-    }
+    private final HomeDealMapper homeDealDAO;
     
     public List<HomeDeal> getDealsByHouse(String aptSeq, boolean asc) {
         List<HomeDeal> deals = homeDealDAO.getDealsByHouse(aptSeq);
