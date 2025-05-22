@@ -4,10 +4,10 @@
 
     <div class="border-b mb-6">
       <nav class="flex space-x-6 text-sm font-medium text-gray-600">
-        <button @click="tab = 'info'" :class="tab === 'info' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5]' : ''">내 정보</button>
-        <button @click="tab = 'wishlist'" :class="tab === 'wishlist' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5]' : ''">찜 목록</button>
-        <button @click="tab = 'reviews'" :class="tab === 'reviews' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5]' : ''">내가 쓴 게시글</button>
-        <button @click="tab = 'comments'" :class="tab === 'comments' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5]' : ''">내 댓글</button>
+        <button @click="tab = 'info'" :class="tab === 'info' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5] font-bold text-lg' : ''">내 정보</button>
+        <button @click="tab = 'wishlist'" :class="tab === 'wishlist' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5] font-bold text-lg' : ''">찜 목록</button>
+        <button @click="tab = 'reviews'" :class="tab === 'reviews' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5] font-bold text-lg' : ''">내가 쓴 게시글</button>
+        <button @click="tab = 'comments'" :class="tab === 'comments' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5] font-bold text-lg' : ''">내 댓글</button>
       </nav>
     </div>
 
@@ -46,7 +46,7 @@
         </form>
       </div>
       <div class="text-right">
-        <button class="bg-[#4DA1F5] hover:bg-[#0DA9FF] text-white px-20 py-3 rounded w-full">수정</button>
+        <button class="bg-[#4DA1F5] hover:bg-[#2D0AFF] text-white px-20 py-3 rounded w-full">수정</button>
       </div>
     </div>
 
@@ -197,7 +197,4 @@ function formatDate(dateString) {
 </script>
 
 <style scoped>
-button {
-  transition: all 0.2s ease-in-out;
-}
 </style>
