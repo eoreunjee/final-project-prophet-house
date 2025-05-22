@@ -1,102 +1,64 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 py-10">
-    <!-- 제목 -->
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">매매 실거래가 검색</h1>
+  <div class="relative w-full h-[calc(100vh-80px)]"> <!-- 전체를 relative로 감싸기 -->
 
-    <!-- 검색 옵션 박스 -->
-    <section class="relative bg-white border rounded-lg p-6 shadow mb-8">
-    <h2 class="text-lg font-semibold mb-4 text-gray-700">검색 옵션</h2>
-    <div class="flex flex-wrap items-center gap-4">
-      <!-- 시/도 -->
-      <div>
-        <select 
-          v-model="selectedSido" 
-          @change="loadGugun"
-          class="w-40 px-2 py-1 border border-gray-300 rounded text-sm"
-        >
+    <!-- 지도 전체 배경 -->
+    <KakaoMap
+      :lat="coordinate.lat"
+      :lng="coordinate.lng"
+      :draggable="true"
+      width="100%"
+      height="100%"
+      class="w-full h-full absolute top-0 left-0 z-0">
+      <KakaoMapMarker
+        v-for="apt in aptList"
+        :key="apt.aptSeq"
+        :lat="parseFloat(apt.latitude)"
+        :lng="parseFloat(apt.longitude)" />
+    </KakaoMap>
+
+    <!-- 왼쪽: 검색 사이드바 (지도 위에 뜸) -->
+    <aside
+      v-show="showSearch"
+      class="absolute top-0 left-0 z-10 w-[400px] h-full bg-white border-r p-6 overflow-y-auto shadow-lg opacity-85">
+      <h2 class="text-2xl font-bold mb-6">매매 실거래가 검색</h2>
+      <div class="flex justify-end mb-4">
+        <button @click="toggleSearch" class="text-sm text-blue-600 hover:underline">검색 닫기</button>
+      </div>
+      <div class="flex flex-col gap-4">
+        <!-- 검색 폼들 그대로 -->
+        <select v-model="selectedSido" @change="loadGugun" class="border px-3 py-2 rounded">
           <option value="">시/도</option>
           <option v-for="sido in sidoList" :key="sido" :value="sido">{{ sido }}</option>
         </select>
-      </div>
 
-      <!-- 군/구 -->
-      <div>
-        <select 
-          v-model="selectedGugun" 
-          @change="loadDong"
-          :disabled="!selectedSido"
-          class="w-40 px-2 py-1 border border-gray-300 rounded text-sm"
-        >
+        <select v-model="selectedGugun" @change="loadDong" :disabled="!selectedSido" class="border px-3 py-2 rounded">
           <option value="">구/군</option>
           <option v-for="gugun in gugunList" :key="gugun" :value="gugun">{{ gugun }}</option>
         </select>
-      </div>
 
-      <!-- 동 -->
-      <div>
-        <select 
-          v-model="selectedDong" 
-          :disabled="!selectedGugun"
-          class="w-40 px-2 py-1 border border-gray-300 rounded text-sm"
-        >
+        <select v-model="selectedDong" :disabled="!selectedGugun" class="border px-3 py-2 rounded">
           <option value="">동 선택</option>
           <option v-for="dong in dongList" :key="dong" :value="dong">{{ dong }}</option>
         </select>
+
+        <input v-model="aptName" placeholder="건물 이름 검색" class="border px-3 py-2 rounded" />
+        <button @click="searchApt" :disabled="!isSearchEnabled" class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+          검색
+        </button>
       </div>
+    </aside>
 
-      <!-- 건물 이름 검색 -->
-      <div class="flex-1 min-w-[180px]">
-        <input
-          v-model="aptName"
-          type="text"
-          class="w-80 px-4 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-100"
-          placeholder="건물 이름 검색"
-        />
-        <!-- 검색 버튼 -->
-      <button
-        @click="searchApt"
-        class="bg-[#338af3] hover:bg-[#2476c9] text-white font-semibold px-10 py-2 rounded transition absolute right-6 bottom-4"
-        :disabled="!isSearchEnabled"
-      >검색</button>
-      </div>
-
-      
-    </div>
-
-    <!-- 지도 숨기기 버튼 -->
-    <div class="mt-4">
-      <button
-        class="text-sm text-blue-600 hover:underline"
-        @click="showMap = !showMap"
-      >
-        {{ showMap ? '지도 숨기기' : '지도 보기' }}
-      </button>
-    </div>
-  </section>
-
-    <section v-show="showMap">
-      <KakaoMap
-        :lat="coordinate.lat"
-        :lng="coordinate.lng"
-        :draggable="true"
-        width="100%"
-        class="px-6 py-4 rounded mb-6 shadow mb-8">
-        <KakaoMapMarker
-          v-for="apt in aptList"
-          :key="apt.aptSeq"
-          :lat="parseFloat(apt.latitude)"
-          :lng="parseFloat(apt.longitude)"
-          ><!--:infoWindow="{ content: apt.aptName}"-->
-        </KakaoMapMarker>
-      </KakaoMap>
-    </section>
-
-    <section>
-      <RealpricePrediction :apt-list="aptList" :deal-map="dealMap"/>
-    </section>
-    
+    <!-- 검색 열기 버튼 (닫혀 있을 때만 보임) -->
+    <button
+      v-show="!showSearch"
+      @click="toggleSearch"
+      class="absolute top-4 left-4 z-20 bg-white border px-3 py-1 rounded text-sm shadow">
+      검색 열기
+    </button>
   </div>
 </template>
+
+
 
 <script setup>
 import { useKakao } from 'vue3-kakao-maps/@utils';
@@ -104,7 +66,6 @@ import { KakaoMap,KakaoMapMarker } from 'vue3-kakao-maps';
 import { ref, computed, reactive } from 'vue';
 import axios from 'axios'
 import RealpricePrediction from '@/components/RealpricePrediction.vue'
-import JeonsaeSagi from '@/components/JeonsaeSagi.vue'
 
 useKakao(import.meta.env.VITE_KAKAO_MAP_API_KEY);
 
@@ -113,8 +74,10 @@ const coordinate = reactive({
   lng: 126.9786567
 });
 
-const showMap = ref(true);
-const selectedType = ref('매매');
+const showSearch = ref(true);
+const toggleSearch = () => {
+  showSearch.value = !showSearch.value;
+};
 
 // Reactive states
 const selectedSido = ref('')

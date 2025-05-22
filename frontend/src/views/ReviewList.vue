@@ -25,13 +25,13 @@
         </div>
 
         <!-- 지역, 유형 -->
-        <div class="flex flex-wrap gap-2 mb-7 text-sm">
+        <div class="flex flex-wrap gap-2 mb-5 text-sm">
           <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">{{ review.location }}</span>
           <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">{{ review.dealType }}</span>
         </div>
 
         <!-- 본문 -->
-        <p class="text-gray-800 whitespace-pre-wrap">{{ review.content }}</p>
+        <p class="text-gray-800 mb-4 whitespace-pre-wrap">{{ review.content }}</p>
         <router-link :to="`/reviews/detail/${review.reviewId}`" class="text-sm text-blue-500 hover:underline">
           댓글 {{ review.commentCount }}
         </router-link>
