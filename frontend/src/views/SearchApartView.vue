@@ -19,35 +19,38 @@
     <!-- 왼쪽: 검색 사이드바 (지도 위에 뜸) -->
     <aside
       v-show="showSearch"
-      class="absolute top-0 left-0 z-10 w-[400px] h-full bg-white border-r p-6 overflow-y-auto shadow-lg opacity-85">
-      <h2 class="text-2xl font-bold mb-6">매매 실거래가 검색</h2>
-      <div class="flex justify-end mb-4">
-        <button @click="toggleSearch" class="text-sm text-blue-600 hover:underline">검색 닫기</button>
+      class="absolute top-0 left-0 z-10 w-[400px] h-full bg-white border-r shadow-lg opacity-85 flex flex-col overflow-hidden"
+    >
+      <!-- 🔹 검색 폼 고정 영역 -->
+      <div class="p-6 bg-white shrink-0">
+        <h2 class="text-2xl font-bold mb-4">매매 실거래가 검색</h2>
+        <div class="flex justify-end mb-4">
+          <button @click="toggleSearch" class="text-sm text-blue-600 hover:underline">검색 닫기</button>
+        </div>
+        <div class="flex flex-col gap-2">
+          <select v-model="selectedSido" @change="loadGugun" class="border px-3 py-2 rounded">
+            <option value="">시/도</option>
+            <option v-for="sido in sidoList" :key="sido" :value="sido">{{ sido }}</option>
+          </select>
+          <select v-model="selectedGugun" @change="loadDong" :disabled="!selectedSido" class="border px-3 py-2 rounded">
+            <option value="">구/군</option>
+            <option v-for="gugun in gugunList" :key="gugun" :value="gugun">{{ gugun }}</option>
+          </select>
+          <select v-model="selectedDong" :disabled="!selectedGugun" class="border px-3 py-2 rounded">
+            <option value="">동 선택</option>
+            <option v-for="dong in dongList" :key="dong" :value="dong">{{ dong }}</option>
+          </select>
+          <input v-model="aptName" placeholder="건물 이름 검색" class="border px-3 py-2 rounded" />
+          <button @click="searchApt" :disabled="!isSearchEnabled" class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">검색</button>
+        </div>
       </div>
-      <div class="flex flex-col gap-4">
-        <!-- 검색 폼들 그대로 -->
-        <select v-model="selectedSido" @change="loadGugun" class="border px-3 py-2 rounded">
-          <option value="">시/도</option>
-          <option v-for="sido in sidoList" :key="sido" :value="sido">{{ sido }}</option>
-        </select>
 
-        <select v-model="selectedGugun" @change="loadDong" :disabled="!selectedSido" class="border px-3 py-2 rounded">
-          <option value="">구/군</option>
-          <option v-for="gugun in gugunList" :key="gugun" :value="gugun">{{ gugun }}</option>
-        </select>
-
-        <select v-model="selectedDong" :disabled="!selectedGugun" class="border px-3 py-2 rounded">
-          <option value="">동 선택</option>
-          <option v-for="dong in dongList" :key="dong" :value="dong">{{ dong }}</option>
-        </select>
-
-        <input v-model="aptName" placeholder="건물 이름 검색" class="border px-3 py-2 rounded" />
-        <button @click="searchApt" :disabled="!isSearchEnabled" class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-          검색
-        </button>
+      <!-- 아파트 목록 스크롤 영역 -->
+      <div class="flex-1 overflow-y-auto px-6 pb-6" style="scrollbar-width: none; -ms-overflow-style: none;">
+        <RealpricePrediction :apt-list="aptList" :deal-map="dealMap" />
       </div>
-      <RealpricePrediction :apt-list="aptList" :deal-map="dealMap"/>
     </aside>
+
 
     <!-- 검색 열기 버튼 (닫혀 있을 때만 보임) -->
     <button
@@ -157,4 +160,14 @@ const searchApt = async () => {
 loadSido()
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Firefox, Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+/* Chrome용도 적용 */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+</style>
+
