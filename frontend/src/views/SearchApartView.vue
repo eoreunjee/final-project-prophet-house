@@ -13,7 +13,11 @@
         v-for="apt in validAptList"
         :key="apt.aptSeq"
         :lat="parseFloat(apt.latitude)"
-        :lng="parseFloat(apt.longitude)"/>
+        :lng="parseFloat(apt.longitude)"
+        :clickable="true"
+        :infoWindow="{ content: apt.aptName, visible:visibleRef}"
+        @onClickKakaoMapMarker="onClickKakaoMapMarker">
+      </KakaoMapMarker>
     </KakaoMap>
 
     <!-- 왼쪽: 검색 사이드바 (지도 위에 뜸) -->
@@ -47,7 +51,7 @@
 
       <!-- 아파트 목록 스크롤 영역 -->
       <div class="flex-1 overflow-y-auto px-6 pb-6" style="scrollbar-width: none; -ms-overflow-style: none;">
-        <RealpricePrediction :apt-list="aptList" :deal-map="dealMap" @move-map="moveMapCenter" />
+        <RealpricePrediction :apt-list="aptList" :deal-map="dealMap" @move-map="moveMapCenter" @select-marker="handleSelectMarker"/>
       </div>
     </aside>
 
@@ -83,6 +87,13 @@ const toggleSearch = () => {
   showSearch.value = !showSearch.value;
 };
 
+const visibleRef = ref(true);
+const onClickKakaoMapMarker = () => {
+
+  visibleRef.value = !visibleRef.value;
+
+};
+
 // Reactive states
 const selectedSido = ref('')
 const selectedGugun = ref('')
@@ -94,6 +105,12 @@ const aptList = ref([])
 const dealMap = ref({})
 
 const aptName = ref('')
+const selectedApt = ref(null)
+
+const handleSelectMarker = (aptSeq) => {
+  const apt = aptList.value.find(a => a.aptSeq === aptSeq)
+  selectedApt.value = apt || null
+}
 
 // Computed properties
 const isSearchEnabled = computed(() => {
@@ -184,7 +201,6 @@ watch(selectedSido, (newSido) => {
     dongList.value = []
   }
 })
-
 watch(selectedGugun, (newGugun) => {
   if (!newGugun) {
     selectedDong.value = ''

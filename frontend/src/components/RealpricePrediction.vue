@@ -127,6 +127,7 @@ const showPopup = ref(false)
 const selectedDeals = ref([])
 const sortOption = ref('date_desc') // 기본 정렬: 최신순
 const selectedAptName = ref('')
+const selectedAptSeq = ref('')
 
 const sortedDeals = computed(() => {
   return [...selectedDeals.value].sort((a, b) => {
@@ -176,13 +177,16 @@ const getFormattedAverageAmount = (aptSeq) => {
 const openDealPopup = (aptSeq) => {
   const deals = props.dealMap[aptSeq] || []
   selectedDeals.value = deals
+
   showPopup.value = true
   currentPage.value = 1
 
   const apt = props.aptList.find(a => a.aptSeq === aptSeq)
   selectedAptName.value = apt ? apt.aptName : ''
-}
 
+  selectedAptSeq.value = aptSeq
+  emit('select-marker', aptSeq)
+}
 
 const closePopup = () => {
   showPopup.value = false
