@@ -174,6 +174,24 @@ const validAptList = computed(() =>
   )
 );
 
+import { watch } from 'vue'
+
+watch(selectedSido, (newSido) => {
+  if (!newSido) {
+    selectedGugun.value = ''
+    selectedDong.value = ''
+    gugunList.value = []
+    dongList.value = []
+  }
+})
+
+watch(selectedGugun, (newGugun) => {
+  if (!newGugun) {
+    selectedDong.value = ''
+    dongList.value = []
+  }
+})
+
 
 loadSido()
 </script>
