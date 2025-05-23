@@ -27,4 +27,14 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectUser(id);
 	}
 
+	@Override
+	public void updateUser(User user) {
+		if (user.getPassword() != null && !user.getPassword().isBlank()) {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+		} else {
+			userMapper.updateUser(null);
+		}
+		userMapper.updateUser(user);
+	}
+
 }

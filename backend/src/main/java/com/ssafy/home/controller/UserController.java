@@ -27,6 +27,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
     
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody User user) {
+    	userService.updateUser(user);
+    	return ResponseEntity.ok().build();
+    }
+    
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         String token = authService.loginMember(loginRequest.getId(), loginRequest.getPassword());

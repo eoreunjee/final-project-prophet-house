@@ -6,6 +6,7 @@ public interface UserService {
 
 	int createUser(User memberdto);
 	
-	User selectUser(String id);
+	void updateUser(User user);
 	
+	User selectUser(String id);
 }

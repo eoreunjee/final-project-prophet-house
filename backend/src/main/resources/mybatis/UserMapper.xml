@@ -10,6 +10,18 @@
         INSERT INTO users(id, name, email, password, birth_date)
         VALUES(#{id}, #{name}, #{email}, #{password}, #{birthDate})
     </insert>
+    
+    <!-- 회원 정보 수정 -->
+    <update id="updateUser" parameterType="User">
+    	UPDATE	users
+    	<set>
+    		name = #{name}, email = #{email}, birth_date = #{birthDate}
+    		<if test="password != null and password != ''">
+    			, password = #{password}
+    		</if>
+    	</set>
+    	WHERE	id = #{id}
+    </update>
 
 	<!-- 본인 정보 조회 -->	
     <select id="selectUser" parameterType="string" resultType="User">

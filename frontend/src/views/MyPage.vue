@@ -21,33 +21,30 @@
           </div>
           <div>
             <label class="block text-sm font-semibold">이름</label>
-            <input type="text" :value="user.name" class="w-full border rounded px-3 py-2" />
+            <input type="text"  v-model="form.name" class="w-full border rounded px-3 py-2" />
           </div>
           <div>
             <label class="block text-sm font-semibold">이메일</label>
-            <input type="email" :value="user.email" class="w-full border rounded px-3 py-2" />
+            <input type="email" v-model="form.email" class="w-full border rounded px-3 py-2" />
           </div>
           <div>
             <label class="block text-sm font-semibold">생일</label>
-            <input type="date" :value="user.birth" class="w-full border rounded px-3 py-2" />
+            <input type="date"  v-model="form.birth" class="w-full border rounded px-3 py-2" />
           </div>
           <div>
             <label class="block text-sm font-semibold">가입일</label>
             <input type="text" :value="user.joinedAt" disabled class="w-full border rounded px-3 py-2 bg-gray-100" />
           </div>
           <div>
-            <label class="block text-sm font-semibold">현재 비밀번호</label>
-            <input type="password" value="********" class="w-full border rounded px-3 py-2 bg-gray-100" />
+            <label class="block text-sm font-semibold">비밀번호 변경</label>
+            <input type="password" v-model="form.password" class="w-full border rounded px-3 py-2" />
           </div>
-          <div>
-            <label class="block text-sm font-semibold">변경할 비밀번호</label>
-            <input type="password" value="********" class="w-full border rounded px-3 py-2 bg-gray-100" />
-          </div>
-        </form>
-      </div>
-      <div class="text-right">
+          <div class="text-right">
         <button class="bg-[#4DA1F5] hover:bg-[#2D0AFF] text-white px-20 py-3 rounded w-full">수정</button>
       </div>
+        </form>
+      </div>
+      
     </div>
 
     <!-- 찜 목록 탭 -->
@@ -132,6 +129,15 @@ const user = ref({
   birth: '',
   joinedAt: ''
 })
+
+// 유저 정보 (수정)
+const form = ref({
+  name: '',
+  email: '',
+  birth: '',
+  joinedAt: ''
+})
+
 const wishlist = ref([])
 const reviews = ref([])
 const comments = ref([])
@@ -154,6 +160,10 @@ onMounted(async () => {
       joinedAt: data.createdAt?.slice(0, 10)
     }
 
+    form.value.name = data.name
+    form.value.email = data.email
+    form.value.birth = data.birthDate
+
     // ✅ 본인이 쓴 리뷰 불러오기
     const reviewRes = await axios.get('http://localhost:8080/api/reviews/myReviews', {
       params: { userId: data.id },
@@ -173,6 +183,34 @@ onMounted(async () => {
     alert('로그인 세션이 만료되었거나 오류가 발생했습니다.')
   }
 })
+
+const updateMyinfo = async () => {
+  const token = localStorage.getItem('token')
+  if (!token) return alert('로그인이 필요합니다.')
+
+  try {
+    await axios.put('http://localhost:8080/api/user/update', {
+      id: user.value.id,
+      name: form.value.name,
+      email: form.value.email,
+      birthDate: form.value.birth,
+      password: form.value.password || null
+    }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+
+    alert('정보가 수정되었습니다.')
+    console.log('?')
+    user.value.name = form.value.name
+    user.value.email = form.value.email
+    user.value.birth = form.value.birth
+    form.value.password = '' // 입력 초기화
+
+  } catch (err) {
+    console.error('정보 수정 실패:', err)
+    alert('정보 수정 중 오류가 발생했습니다.')
+  }
+}
 
 function formatDate(dateString) {
   if (!dateString) return '-'
