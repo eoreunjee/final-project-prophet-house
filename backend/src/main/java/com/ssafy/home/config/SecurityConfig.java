@@ -33,6 +33,7 @@ public class SecurityConfig {
 	        .authorizeHttpRequests(auth -> auth
 	            .requestMatchers("/api/user/login", "/api/user/register",
 	            		"/api/news",
+	            		"/api/search/apt", "/api/search/sido", "/api/search/gugun*", "/api/search/dong*",
 	            		"/api/reviews", "/api/reviews/{id}", "/api/reviews/{id}/comments").permitAll()
 	            .anyRequest().authenticated()
 	        )

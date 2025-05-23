@@ -3,12 +3,14 @@
     <!-- 제목과 글쓰기 버튼 -->
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-2xl font-bold text-gray-800">후기 게시판</h1>
-      <router-link
-        to="/reviews/regist"
+      <!-- 후기 작성 버튼 -->
+      <button
+        @click="handleWriteClick"
         class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium"
       >
         후기 작성
-      </router-link>
+      </button>
+      <LoginModal v-if="showLoginModal" @close="showLoginModal = false"/>
     </div>
 
     <!-- 후기 리스트 -->
@@ -58,10 +60,24 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
+import LoginModal from '@/components/LoginModal.vue'
 
+const router = useRouter()
 const reviews = ref([])
 const currentPage = ref(1)
 const pageSize = 7
+const showLoginModal = ref(false)
+
+const isAuthenticated = computed(() => !!localStorage.getItem('token'))
+
+const handleWriteClick = () => {
+  if (!isAuthenticated.value) {
+    showLoginModal.value = true
+  } else {
+    router.push('/reviews/regist')
+  }
+}
 
 onMounted(async () => {
   try {

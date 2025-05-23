@@ -9,9 +9,9 @@
       >×</button>
 
       <!-- 로고 -->
-      <div class="flex justify-center mb-6 text-[#4DA1F5]">
+      <h2 class="flex justify-center mb-6 text-[#4DA1F5] font-bold">
         Prophet House
-      </div>
+      </h2>
 
       <!-- 폼 -->
       <form @submit.prevent="onLogin">
