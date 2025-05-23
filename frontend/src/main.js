@@ -4,7 +4,7 @@ import router from './router'
 import axios from 'axios';
 import './assets/main.css'; // Tailwind 연결
 import { setUsernameFromToken } from './utils/auth'
-
+import '@/assets/fonts.css'
 const app = createApp(App)
 
 setUsernameFromToken();

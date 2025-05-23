@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="min-h-screen flex flex-col">
     <!-- Header -->
-    <TheHeader class="bg-white px-6 py-6 shadow-md z-20" />
+    <TheHeader class="bg-white px-6 py-3 shadow-md z-20" />
 
     <!-- Main Content -->
     <main class="flex-1">

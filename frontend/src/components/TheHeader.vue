@@ -3,11 +3,23 @@
     <!-- 왼쪽: 로고 + 메뉴 -->
     <div class="flex items-center space-x-8">
       <h1 class="text-xl text-[#4DA1F5] font-bold whitespace-nowrap">
-        <router-link to="/">Prophet House</router-link>
+        <router-link to="/">
+          <img src="@/assets/logo.png" class="w-28">
+        </router-link>
       </h1>
       <nav class="flex space-x-6 text-sm whitespace-nowrap">
-        <router-link to="/searchApart" class="text-gray-800 hover:text-[#4DA1F5]">매매 실거래가</router-link>
-        <router-link to="/reviews/list" class="text-gray-800 hover:text-[#4DA1F5]">후기 게시판</router-link>
+        <router-link
+          to="/searchApart"
+          :class="[$route.path.startsWith('/searchApart') ? 'text-[#4DA1F5]' : 'text-gray-800', 'hover:text-[#4DA1F5]']"
+        >
+          매매 실거래가
+        </router-link>
+        <router-link
+          to="/reviews/list"
+          :class="[$route.path.startsWith('/reviews') ? 'text-[#4DA1F5]' : 'text-gray-800', 'hover:text-[#4DA1F5]']"
+        >
+          후기 게시판
+        </router-link>
         <router-link to=""></router-link>
       </nav>
     </div>
@@ -19,7 +31,7 @@
         <!-- ✅ 마이페이지 버튼 추가 -->
         <router-link
           to="/user/myPage"
-          class="text-gray-800 hover:text-[#4DA1F5]"
+          :class="[$route.path.startsWith('/user/myPage') ? 'text-[#4DA1F5]' : 'text-gray-800', 'hover:text-[#4DA1F5]']"
         >
           마이페이지
         </router-link>

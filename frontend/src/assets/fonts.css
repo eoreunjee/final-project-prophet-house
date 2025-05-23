@@ -1,0 +1,12 @@
+/* src/assets/fonts.css */
+@font-face {
+  font-family: 'Freesentation-3Light';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* 전역 적용 */
+body {
+  font-family: 'Freesentation-9Black', sans-serif;
+}

@@ -21,46 +21,54 @@
     </KakaoMap>
 
     <!-- 왼쪽: 검색 사이드바 (지도 위에 뜸) -->
-    <aside
+    <transition name="slide">
+      <aside
+        v-show="showSearch"
+        class="absolute top-0 left-0 z-10 w-[400px] h-full bg-white shadow-right flex flex-col overflow-hidden"
+      >
+        <!-- 🔹 검색 폼 고정 영역 -->
+      <div class="py-[35px] p-7 bg-white shrink-0">
+          <!-- <h2 class="text-2xl font-bold mb-4">매매 실거래가 검색</h2> -->
+          
+          <div class="flex flex-col gap-2 mb-10">
+            <input v-model="aptName" placeholder="🔍︎  아파트 이름 검색" class="border px-3 py-2 rounded mb-6" />
+            <p>* 지역 조건 설정</p>
+            <select v-model="selectedSido" @change="loadGugun" class="border px-3 py-2 rounded">
+              <option value="">시/도</option>
+              <option v-for="sido in sidoList" :key="sido" :value="sido">{{ sido }}</option>
+            </select>
+            <select v-model="selectedGugun" @change="loadDong" :disabled="!selectedSido" class="border px-3 py-2 rounded">
+              <option value="">구/군</option>
+              <option v-for="gugun in gugunList" :key="gugun" :value="gugun">{{ gugun }}</option>
+            </select>
+            <select v-model="selectedDong" :disabled="!selectedGugun" class="border px-3 py-2 rounded mb-7">
+              <option value="">동 선택</option>
+              <option v-for="dong in dongList" :key="dong" :value="dong">{{ dong }}</option>
+            </select>
+            
+            <button @click="searchApt" :disabled="!isSearchEnabled" class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">검색</button>
+          </div>
+        </div>
+        <!-- 아파트 목록 스크롤 영역 -->
+        <div class="flex-1 overflow-y-auto px-6 pb-6" style="scrollbar-width: none; -ms-overflow-style: none;">
+          <RealpricePrediction :apt-list="aptList" :deal-map="dealMap" @move-map="moveMapCenter" @select-marker="handleSelectMarker"/>
+        </div>
+      </aside>
+    </transition>
+    <button
       v-show="showSearch"
-      class="absolute top-0 left-0 z-10 w-[400px] h-full bg-white shadow-right flex flex-col overflow-hidden"
+      @click="toggleSearch"
+      class="absolute left-[400px] top-1/2 transform -translate-y-1/2 z-50 bg-white rounded-r-md py-3 text-sm shadow-right hover:bg-gray-100"
     >
-      <!-- 🔹 검색 폼 고정 영역 -->
-      <div class="p-6 bg-white shrink-0">
-        <h2 class="text-2xl font-bold mb-4">매매 실거래가 검색</h2>
-        <div class="flex justify-end mb-4">
-          <button @click="toggleSearch" class="text-sm text-blue-600 hover:underline">검색 닫기</button>
-        </div>
-        <div class="flex flex-col gap-2">
-          <select v-model="selectedSido" @change="loadGugun" class="border px-3 py-2 rounded">
-            <option value="">시/도</option>
-            <option v-for="sido in sidoList" :key="sido" :value="sido">{{ sido }}</option>
-          </select>
-          <select v-model="selectedGugun" @change="loadDong" :disabled="!selectedSido" class="border px-3 py-2 rounded">
-            <option value="">구/군</option>
-            <option v-for="gugun in gugunList" :key="gugun" :value="gugun">{{ gugun }}</option>
-          </select>
-          <select v-model="selectedDong" :disabled="!selectedGugun" class="border px-3 py-2 rounded">
-            <option value="">동 선택</option>
-            <option v-for="dong in dongList" :key="dong" :value="dong">{{ dong }}</option>
-          </select>
-          <input v-model="aptName" placeholder="건물 이름 검색" class="border px-3 py-2 rounded" />
-          <button @click="searchApt" :disabled="!isSearchEnabled" class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">검색</button>
-        </div>
-      </div>
-
-      <!-- 아파트 목록 스크롤 영역 -->
-      <div class="flex-1 overflow-y-auto px-6 pb-6" style="scrollbar-width: none; -ms-overflow-style: none;">
-        <RealpricePrediction :apt-list="aptList" :deal-map="dealMap" @move-map="moveMapCenter" @select-marker="handleSelectMarker"/>
-      </div>
-    </aside>
+      〈&nbsp;&nbsp;&nbsp;
+    </button>
 
 
     <!-- 검색 열기 버튼 (닫혀 있을 때만 보임) -->
     <button
       v-show="!showSearch"
       @click="toggleSearch"
-      class="absolute top-4 left-4 z-20 bg-white border px-3 py-1 rounded text-sm shadow">
+      class="absolute top-4 left-4 z-20 bg-white border px-3 py-2 rounded text-sm shadow">
       검색 열기
     </button>
   </div>
@@ -231,5 +239,23 @@ loadSido()
   background-color: rgba(0, 0, 0, 0.2); /* 스크롤바 색상 */
   border-radius: 3px;
 }
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease;
+}
+.slide-enter-from {
+  transform: translateX(-100%);
+}
+.slide-enter-to {
+  transform: translateX(0);
+}
+.slide-leave-from {
+  transform: translateX(0);
+}
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+
 </style>
 
