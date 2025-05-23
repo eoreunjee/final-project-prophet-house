@@ -22,6 +22,11 @@
     	</set>
     	WHERE	id = #{id}
     </update>
+    
+    <!-- 회원 탈퇴 -->
+    <delete id="deleteUser">
+    	DELETE FROM users WHERE id=#{id}
+    </delete>
 
 	<!-- 본인 정보 조회 -->	
     <select id="selectUser" parameterType="string" resultType="User">

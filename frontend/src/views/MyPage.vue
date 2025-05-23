@@ -39,9 +39,16 @@
             <label class="block text-sm font-semibold">비밀번호 변경</label>
             <input type="password" v-model="form.password" class="w-full border rounded px-3 py-2" />
           </div>
-          <div class="text-right">
-        <button class="bg-[#4DA1F5] hover:bg-[#2D0AFF] text-white px-20 py-3 rounded w-full">수정</button>
-      </div>
+          <div class="text-center">
+            <button class="bg-[#4DA1F5] hover:bg-[#2D0AFF] text-white px-20 py-3 rounded w-full">수정</button>
+            <button
+              type="button"
+              @click="withdraw"
+              class="text-sm text-gray-500 hover:underline"
+            >
+    회원 탈퇴
+  </button>
+          </div>
         </form>
       </div>
       
@@ -229,6 +236,23 @@ function formatDate(dateString) {
   } catch (e) {
     console.log('formatDate()에러: ',e);
     return '-'
+  }
+}
+
+const withdraw = async () => {
+  if (!confirm('정말 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) return
+
+  const token = localStorage.getItem('token')
+  try {
+    await axios.delete(`http://localhost:8080/api/user/${user.value.id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    alert('회원 탈퇴가 완료되었습니다.')
+    localStorage.removeItem('token')
+    window.location.href = '/' // 홈으로 이동
+  } catch (err) {
+    console.error('회원 탈퇴 실패:', err)
+    alert('탈퇴 중 오류가 발생했습니다.')
   }
 }
 
