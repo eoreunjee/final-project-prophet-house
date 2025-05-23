@@ -21,7 +21,7 @@
         </div>
 
         <div v-if="dealMap[apt.aptSeq] && dealMap[apt.aptSeq].length" class="text-sm text-gray-600">
-          <div class="text-sm font-medium text-blue-600 mt-2">평균 거래가: {{ getFormattedAverageAmount(apt.aptSeq) }}</div>
+          <div class="text-sm font-medium text-blue-600 mt-2">평균 거래가: {{ getFormattedAverageAmount(apt.aptSeq) }}원</div>
         </div>
       </div>
     </section>
@@ -36,7 +36,7 @@
         <!-- 헤더 -->
         <div class="sticky top-0 bg-white z-10 pb-3 mb-3 border-b">
           <div class="flex justify-between items-center mb-2">
-            <h2 class="text-lg font-bold">거래 내역</h2>
+            <h2 class="text-lg font-bold"> {{ selectedAptName }} 거래내역</h2>
             <button @click="closePopup" class="text-sm text-red-500 hover:underline">닫기</button>
           </div>
 
@@ -126,7 +126,7 @@ const props = defineProps({
 const showPopup = ref(false)
 const selectedDeals = ref([])
 const sortOption = ref('date_desc') // 기본 정렬: 최신순
-
+const selectedAptName = ref('')
 
 const sortedDeals = computed(() => {
   return [...selectedDeals.value].sort((a, b) => {
@@ -177,7 +177,10 @@ const openDealPopup = (aptSeq) => {
   const deals = props.dealMap[aptSeq] || []
   selectedDeals.value = deals
   showPopup.value = true
-  currentPage.value = 1 // ✅ 페이지 초기화
+  currentPage.value = 1
+
+  const apt = props.aptList.find(a => a.aptSeq === aptSeq)
+  selectedAptName.value = apt ? apt.aptName : ''
 }
 
 
