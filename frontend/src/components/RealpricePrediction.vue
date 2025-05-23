@@ -203,7 +203,7 @@ const moveToMarker = (apt) => {
 }
 
 const currentPage = ref(1)
-const pageSize = 10
+const pageSize = 7
 const maxVisibleButtons = 5
 
 // 거래내역 정렬된 결과 → 현재 페이지용으로 잘라냄

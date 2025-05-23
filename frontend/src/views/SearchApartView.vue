@@ -23,7 +23,7 @@
     <!-- 왼쪽: 검색 사이드바 (지도 위에 뜸) -->
     <aside
       v-show="showSearch"
-      class="absolute top-0 left-0 z-10 w-[400px] h-full bg-white border-r shadow-lg flex flex-col overflow-hidden"
+      class="absolute top-0 left-0 z-10 w-[400px] h-full bg-white shadow-right flex flex-col overflow-hidden"
     >
       <!-- 🔹 검색 폼 고정 영역 -->
       <div class="p-6 bg-white shrink-0">

@@ -13,6 +13,7 @@ const router = createRouter({
       path: '/searchApart',
       name: 'searchApart',
       component: () => import('../views/SearchApartView.vue'),
+      meta: { hideFooter: true }
     },
     {
       path: '/user',

@@ -1,15 +1,15 @@
 <template>
   <div id="app" class="min-h-screen flex flex-col">
     <!-- Header -->
-    <TheHeader class="bg-white px-6 py-6 shadow" />
+    <TheHeader class="bg-white px-6 py-6 shadow-md z-20" />
 
     <!-- Main Content -->
-    <main class="flex-1 min-h-screen">
+    <main class="flex-1">
       <router-view />
     </main>
 
     <!-- Footer -->
-    <TheFooter class="bg-gray-100 text-center py-4 text-sm text-gray-600" />
+    <TheFooter v-if="!$route.meta.hideFooter" class="bg-gray-100 text-center py-4 text-sm text-gray-600" />
   </div>
 </template>
 

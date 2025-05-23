@@ -46,8 +46,8 @@
               @click="withdraw"
               class="text-sm text-gray-500 hover:underline"
             >
-    회원 탈퇴
-  </button>
+              회원 탈퇴
+            </button>
           </div>
         </form>
       </div>
