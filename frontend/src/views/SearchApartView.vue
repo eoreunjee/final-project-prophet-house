@@ -24,7 +24,7 @@
       <!-- 검색 aside -->
       <aside v-show="showSearch[0]" class="absolute top-0 left-0 z-10 w-[400px] h-full bg-white shadow-right flex flex-col">
         <div class="p-7 bg-white shrink-0 pt-[55px]">
-          <button @click="showSearch[0] = false; selectedApt.value = null" class="absolute right-3 top-2 z-20 rounded-l p-2 text-sm hover:bg-gray-100">닫기</button>
+          <button @click="showSearch[0] = false; selectedApt.value = null" class="absolute right-3 top-2 z-20 rounded px-1 text-lg text-gray-400 hover:bg-gray-100">×</button>
           <div class="flex flex-col gap-2 mb-1">
             <input v-model="aptName" placeholder="🔍︎  아파트 이름 검색" class="border px-3 py-2 rounded-[9px] mb-6" />
             <p>* 지역 조건 설정</p>
@@ -59,8 +59,8 @@
       <!-- 거래내역 + 그래프 aside -->
       <aside v-if="selectedApt" class="absolute top-0 left-[400px] w-[400px] h-full bg-white shadow-left z-10 flex flex-col p-5 gap-4">
         <p class="text-2xl font-bold">{{ selectedApt.aptName }}</p>
-        <button @click="selectedApt = false" class="absolute right-3 top-7 transform -translate-y-1/2 z-20 px-3 py-2 rounded-l text-sm hover:bg-gray-100">닫기</button>
-        <div class="bg-gray-100 h-[265px] flex items-center justify-center rounded shrink-0">[그래프 자리]</div>
+        <button @click="selectedApt = false" class="absolute right-3 top-2 z-20 rounded px-1 text-lg text-gray-400 hover:bg-gray-100">×</button>
+        <div class="bg-gray-100 h-[260px] flex items-center justify-center rounded shrink-0">[그래프 자리]</div>
 
         <div class="overflow-y-auto flex-1">
           <div class="flex justify-between items-center mb-3">
