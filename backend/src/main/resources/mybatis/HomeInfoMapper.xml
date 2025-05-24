@@ -3,27 +3,43 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.home.mapper.HomeInfoMapper">
 
-  <select id="getPagedHouses" resultType="HomeInfo">
+<!--   <select id="getPagedHouses" resultType="HomeInfo">
     <bind name="offset" value="(page - 1) * pageSize"/>
   SELECT * FROM my_table
   LIMIT #{offset}, #{pageSize}
   </select>
+ -->
+	<select id="getHousesByDong" resultType="HomeInfo">
+	  SELECT h.apt_seq     AS aptSeq,
+	         h.apt_nm      AS aptName,
+	         h.road_nm     AS roadNm,
+	         h.road_nm_bonbun AS roadNmBonbun,
+	         h.road_nm_bubun AS roadNmBubun,
+	         h.build_year  AS buildYear,
+	         h.latitude,
+	         h.longitude
+	    FROM houseinfos h
+	   WHERE h.sgg_cd = LEFT(
+	                     (SELECT dong_code
+	                      FROM dongcodes
+	                      WHERE sido_name = #{sido}
+	                        AND gugun_name = #{gugun}
+	                        AND dong_name = #{dong}
+	                      LIMIT 1),
+	                     5)
+	     AND h.umd_cd = RIGHT(
+	                     (SELECT dong_code
+	                      FROM dongcodes
+	                      WHERE sido_name = #{sido}
+	                        AND gugun_name = #{gugun}
+	                        AND dong_name = #{dong}
+	                      LIMIT 1),
+	                     5)
+	     AND h.latitude IS NOT NULL
+	  ORDER BY h.apt_nm
+	</select>
 
-  <select id="getHousesByDong" resultType="HomeInfo">
-    SELECT  h.apt_seq     AS aptSeq,
-			h.apt_nm      AS aptName,
 
-    		h.latitude,
-    		h.longitude
-      FROM houseinfos h
-      JOIN dongcodes d
-        ON h.sgg_cd = LEFT(d.dong_code,5)
-       AND h.umd_cd = RIGHT(d.dong_code,5)
-     WHERE d.sido_name = #{sido}
-       AND d.gugun_name = #{gugun}
-       AND d.dong_name   = #{dong}
-     ORDER BY h.apt_nm
-  </select>
 
   <select id="getSidoList" resultType="string">
     SELECT DISTINCT sido_name

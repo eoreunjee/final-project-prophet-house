@@ -10,7 +10,7 @@
 
       <!-- 로고 -->
       <h2 class="flex justify-center mb-6 text-[#4DA1F5] font-bold">
-        Prophet House
+        <img src="@/assets/logo.png" class="w-28">
       </h2>
 
       <!-- 폼 -->

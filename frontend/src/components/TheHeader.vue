@@ -1,7 +1,7 @@
 <template>
-  <div class="max-w-full mx-auto w-full flex justify-between items-center font-bold">
+  <div class="max-w-full mx-auto w-full flex justify-between items-center">
     <!-- 왼쪽: 로고 + 메뉴 -->
-    <div class="flex items-center space-x-8">
+    <div class="flex items-center space-x-8 font-bold">
       <h1 class="text-xl text-[#4DA1F5] font-bold whitespace-nowrap">
         <router-link to="/">
           <img src="@/assets/logo.png" class="w-28">
@@ -25,7 +25,7 @@
     </div>
 
     <!-- 오른쪽: 로그인 여부에 따라 버튼 분기 -->
-    <div class="flex items-center space-x-4 text-sm">
+    <div class="flex items-center space-x-4 text-sm font-bold">
       <template v-if="username">
         <span class="text-gray-700">{{ username }} 님</span>
         <!-- ✅ 마이페이지 버튼 추가 -->
