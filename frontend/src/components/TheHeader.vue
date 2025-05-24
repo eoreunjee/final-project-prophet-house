@@ -4,7 +4,7 @@
     <div class="flex items-center space-x-8 font-bold">
       <h1 class="text-xl text-[#4DA1F5] font-bold whitespace-nowrap">
         <router-link to="/">
-          <img src="@/assets/logo.png" class="w-28">
+          <img src="@/assets/logo.png" class="w-[110px]">
         </router-link>
       </h1>
       <nav class="flex space-x-6 text-sm whitespace-nowrap">

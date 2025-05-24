@@ -16,8 +16,8 @@
           최적의 주거 공간을 찾는 여정을 시작하세요
         </h1>
         <p class="text-white text-base md:text-lg mb-6">
-          믿을 수 있는 정보와 함께 당신에게 맞는 집을 찾아보세요. 실시간 시세와 전세사기 위험도 확인,
-          그리고 다양한 매물 정보를 제공합니다.
+          믿을 수 있는 정보와 함께 당신에게 맞는 집을 찾아보세요. 실제 거래 정보와 전세사기 발생 지역 확인,
+          그리고 다양한 정보를 제공합니다.
         </p>
       </div>
       
@@ -34,21 +34,21 @@
           <div class="text-blue-600 text-3xl mb-2">🏠</div>
           <h3 class="font-semibold mb-1">정확한 매물 정보</h3>
           <p class="text-sm text-gray-600">
-            검증된 매물 정보와 매매, 전세 등 다양한 거래 유형별 검색 서비스를 제공합니다.
+            국토교통부에서 제공하는 실제로 거래된 매물 정보 검색 서비스를 제공합니다.
           </p>
         </div>
         <div class="p-6 bg-white rounded shadow border text-center">
           <div class="text-blue-600 text-3xl mb-2">📊</div>
           <h3 class="font-semibold mb-1">시세 예측 및 분석</h3>
           <p class="text-sm text-gray-600">
-            미래 시세 예측 및 지역 가격 트렌드를 분석하여 투자 및 거주 판단에 도움을 드립니다.
+            검색 지역의 시세와 AI를 활용한 1년 뒤의 미래 시세 예측 서비스를 제공합니다.
           </p>
         </div>
         <div class="p-6 bg-white rounded shadow border text-center">
           <div class="text-blue-600 text-3xl mb-2">🛡️</div>
           <h3 class="font-semibold mb-1">안전한 거래 정보</h3>
           <p class="text-sm text-gray-600">
-            전세사기 피해정보와 위험지역 알림을 통해 안전한 거래를 돕습니다.
+            지역별 전세사기 피해 발생 건수 시각화를 통해 안전한 거래를 돕습니다.
           </p>
         </div>
       </div>
