@@ -8,6 +8,8 @@ public interface HomeInfoService {
 
 	List<HomeInfo> searchAptByNameUsingKMP(List<HomeInfo> allAptList, String keyword);
 	
+	List<HomeInfo> searchAptByNameAll(String aptName);
+	
 	List<HomeInfo> getHousesByDong(String sido, String gugun, String dong);
 	
 	List<String> getSidoList();

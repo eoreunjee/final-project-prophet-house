@@ -210,7 +210,12 @@ const isSearchEnabled = computed(() => selectedSido.value && selectedGugun.value
 const searchApt = async () => {
   try {
     const response = await axios.get('http://localhost:8080/api/search/apt', {
-      params: { sido: selectedSido.value, gugun: selectedGugun.value, dong: selectedDong.value }
+      params: {
+        sido: selectedSido.value,
+        gugun: selectedGugun.value,
+        dong: selectedDong.value,
+        aptName: aptName.value.trim() !== '' ? aptName.value : null // !
+      }
     })
     aptList.value = response.data.aptList
     dealMap.value = response.data.dealMap

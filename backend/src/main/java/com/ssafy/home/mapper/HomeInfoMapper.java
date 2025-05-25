@@ -12,6 +12,8 @@ public interface HomeInfoMapper {
     List<HomeInfo> getHousesByDong(@Param("sido") String sido,
                                    @Param("gugun") String gugun,
                                    @Param("dong")  String dong);
+    
+    List<HomeInfo> findAllAptByName(@Param("aptName") String aptName);
 
     List<String> getSidoList();
     List<String> getGugunList(@Param("sido") String sido);

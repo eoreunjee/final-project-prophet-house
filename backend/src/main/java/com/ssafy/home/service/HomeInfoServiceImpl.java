@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class HomeInfoServiceImpl implements HomeInfoService {
+	
 	private final HomeInfoMapper homeInfoMapper;
     
     public List<HomeInfo> searchAptByNameUsingKMP(List<HomeInfo> allAptList, String keyword) {
@@ -41,5 +42,9 @@ public class HomeInfoServiceImpl implements HomeInfoService {
     public List<String> getDongList(String gugun) {
     	return homeInfoMapper.getDongList(gugun);
     }
+
+	public List<HomeInfo> searchAptByNameAll(String aptName) {
+		return homeInfoMapper.findAllAptByName(aptName);
+	}
 
 }

@@ -3,12 +3,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.home.mapper.HomeInfoMapper">
 
-<!--   <select id="getPagedHouses" resultType="HomeInfo">
-    <bind name="offset" value="(page - 1) * pageSize"/>
-  SELECT * FROM my_table
-  LIMIT #{offset}, #{pageSize}
-  </select>
- -->
 	<select id="getHousesByDong" resultType="HomeInfo">
 	  SELECT h.apt_seq     AS aptSeq,
 	         h.apt_nm      AS aptName,
@@ -38,7 +32,12 @@
 	     AND h.latitude IS NOT NULL
 	  ORDER BY h.apt_nm
 	</select>
-
+	
+	<!-- 아파트 이름만 검색 -->
+	<select id="findAllAptByName" resultType="com.ssafy.home.dto.HomeInfo">
+	  SELECT * FROM houseinfos
+	  WHERE apt_name LIKE CONCAT('%', #{aptName}, '%')
+	</select>
 
 
   <select id="getSidoList" resultType="string">
