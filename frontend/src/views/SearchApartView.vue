@@ -15,9 +15,6 @@
           :key="apt.aptSeq"
           :lat="parseFloat(apt.latitude)"
           :lng="parseFloat(apt.longitude)"
-          :clickable="true"
-          :infoWindow="{ content: apt.aptName, visible: visibleRef }"
-          @onClickKakaoMapMarker="onClickKakaoMapMarker"
         />
       </KakaoMap>
 
@@ -38,7 +35,7 @@
             </select>
             <select v-model="selectedDong" :disabled="!selectedGugun" class="border px-3 py-2 rounded-[9px] mb-7">
               <option value="">동 선택</option>
-              <option v-for="dong in dongList" :key="dong" :value="dong">{{ dong }}</option>
+              <option v-for="dong in dongList" :key="dong.dongCode" :value="dong.dongCode">{{ dong.dongName }}</option>
             </select>
             <button @click="searchApt" :disabled="!isSearchEnabled" class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">검색</button>
           </div>
@@ -66,11 +63,21 @@
 
       <!-- 거래내역 + 그래프 aside -->
       <aside v-if="selectedApt" class="absolute top-0 left-[400px] w-[400px] h-full bg-white shadow-lg z-10 flex flex-col p-5 gap-4">
-        <p class="text-2xl font-bold">{{ selectedApt.aptName }}</p>
+        <div>
+          <span class="text-2xl font-bold">{{ selectedApt.aptName }}</span>
+          <p class="text-xs text-gray-600">
+            {{ selectedApt.sidoName + ' ' +
+              selectedApt.gugunName + ' ' +
+              selectedApt.dongName + ' ' + 
+              selectedApt.roadNm + ' ' + selectedApt.roadNmBonbun
+            }}
+            {{ selectedApt.roadNmBubun === '0' ? '' : '-' + selectedApt.roadNmBubun }}
+          </p>
+        </div>
         <button @click="selectedApt = false" class="absolute right-3 top-2 rounded px-1 text-lg text-gray-400 hover:bg-gray-100">×</button>
         
         <!-- TODO ---------------예측 그래프 ------------------------>
-        <h2 class="text-lg font-bold">2026년 {{ selectedDong }} m²당 시세 예측 그래프</h2>
+        <h2 class="text-lg font-bold">2026년 {{ selectedApt.dongName }} m²당 시세 예측 그래프</h2>
         <div v-if="years && avgPrices && isPredicted" class="bg-white-100 h-[260px] items-center justify-center shadow-lg rounded shrink-0">
           <Line :data="chartData" :options="chartOptions" />
           <div class="mt-6 text-center text-base text-gray-700 font-medium">
@@ -176,7 +183,6 @@ import { useKakao } from 'vue3-kakao-maps/@utils'
 useKakao(import.meta.env.VITE_KAKAO_MAP_API_KEY)
 
 const coordinate = reactive({ lat: 37.566826, lng: 126.9786567 })
-const visibleRef = ref(true)
 const showSearch = ref([true, true])
 const selectedApt = ref(null)
 const sortOption = ref('date_desc')
@@ -194,7 +200,6 @@ const pageSize = 8
 const maxVisibleButtons = 5
 const isSearchingApt = ref(false)
 const isLoadingPrediction = ref(false)
-
 
 const handleSelectApt = (apt) => {
   selectedApt.value = apt
@@ -217,21 +222,17 @@ watch(() => showSearch.value[0], (isOpen) => {
 
 
 const isSearchEnabled = computed(() => {
-  return (
-    aptName.value.trim() !== '' ||
-    (selectedSido.value && selectedGugun.value && selectedDong.value)
-  );
+  return aptName.value.trim() !== '' || selectedDong.value !== '';
 });
 
 
 const searchApt = async () => {
+  console.log("📦 searchApt() 호출됨")
   isSearchingApt.value = true
   try {
     const response = await axios.get('http://localhost:8080/api/search/apt', {
       params: {
-        sido: selectedSido.value,
-        gugun: selectedGugun.value,
-        dong: selectedDong.value,
+        dongCode: selectedDong.value,
         aptName: aptName.value.trim() !== '' ? aptName.value : null // !
       }
     })
@@ -241,7 +242,7 @@ const searchApt = async () => {
   } finally {
     isSearchingApt.value = false
   }
-  // 아파트 검색 후 별도 예측 시작 TODO 아파트 검색 후 예측도 같이 실행
+  // TODO 아파트 검색 후 별도 예측 시작, 아파트 검색 후 예측도 같이 실행
   isLoadingPrediction.value = true
   try {
     await getPrediction();
@@ -283,10 +284,6 @@ watch(selectedGugun, (newGugun) => {
     dongList.value = []
   }
 })
-
-const onClickKakaoMapMarker = () => {
-  visibleRef.value = !visibleRef.value
-}
 
 const sortedDeals = computed(() => {
   const deals = dealMap.value[selectedApt.value?.aptSeq] || []

@@ -14,6 +14,10 @@ import lombok.ToString;
 public class HomeInfo {
     private String aptSeq;
     private String aptName;
+    private String sidoName;
+    private String gugunName;
+    private String dongName;
+    private String dongCode;
     private String roadNm;
     private String roadNmBonbun;
     private String roadNmBubun;

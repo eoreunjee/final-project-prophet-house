@@ -2,6 +2,7 @@ package com.ssafy.home.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,8 @@ public class HomeInfoServiceImpl implements HomeInfoService {
         return result;
     }
     
-    public List<HomeInfo> getHousesByDong(String sido, String gugun, String dong) {
-        return homeInfoMapper.getHousesByDong(sido, gugun, dong);
+    public List<HomeInfo> getHousesByDong(String dong) {
+        return homeInfoMapper.getHousesByDong(dong);
     }
     
     public List<String> getSidoList() {
@@ -39,7 +40,7 @@ public class HomeInfoServiceImpl implements HomeInfoService {
     	return homeInfoMapper.getGugunList(sido);
     }
 
-    public List<String> getDongList(String gugun) {
+    public List<Map<String, String>> getDongList(String gugun) {
     	return homeInfoMapper.getDongList(gugun);
     }
 

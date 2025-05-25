@@ -1,5 +1,6 @@
 package com.ssafy.home.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,34 +29,34 @@ public class SearchController {
 
     @GetMapping("/apt")
     public Map<String, Object> searchApartment(
-            @RequestParam(required = false) String sido,
-            @RequestParam(required = false) String gugun,
-            @RequestParam(required = false) String dong,
+            @RequestParam(required = false) String dongCode,
             @RequestParam(required = false) String aptName
     ) {
+    	System.out.println("🟦 [SearchController] 받은 dongCode = " + dongCode);
+        System.out.println("🟦 [SearchController] 받은 aptName  = " + aptName);
         List<HomeInfo> aptList;
 
-        // 1. 지역 조건이 없고 아파트 이름만 있는 경우 → 전체 검색
-        if ((sido == null || sido.isBlank()) &&
-            (gugun == null || gugun.isBlank()) &&
-            (dong == null || dong.isBlank()) &&
-            aptName != null && !aptName.isBlank()) {
-            aptList = homeInfoService.searchAptByNameAll(aptName); // 새로 만들어야 할 메서드
-        } else {
-            // 2. 지역 조건 기반 필터
-            aptList = homeInfoService.getHousesByDong(sido, gugun, dong);
+        // 1. dongCode 없고 aptName만 있는 경우 → 전체 이름 기반 검색
+        if ((dongCode == null || dongCode.isBlank()) && aptName != null && !aptName.isBlank()) {
+            aptList = homeInfoService.searchAptByNameAll(aptName);
+        } else if (dongCode != null && !dongCode.isBlank()) {
+            // 2. dongCode 있는 경우
+            aptList = homeInfoService.getHousesByDong(dongCode);
 
-            // 3. 이름 검색이 추가로 있는 경우 → KMP 필터링
+            // 3. 추가로 이름도 입력된 경우 → KMP 필터
             if (aptName != null && !aptName.isBlank()) {
                 aptList = homeInfoService.searchAptByNameUsingKMP(aptList, aptName);
             }
+        } else {
+            aptList = new ArrayList<>();
         }
 
-        // 4. dealMap 구성 (기본 정렬은 최신순)
+        // 거래 정보 매핑
         Map<String, List<HomeDeal>> dealMap = new HashMap<>();
         for (HomeInfo apt : aptList) {
-            List<HomeDeal> deals = homeDealService.getDealsByHouse(apt.getAptSeq(), false); // 최신순
-            dealMap.put(apt.getAptSeq(), deals);
+            if (apt.getAptSeq() != null) {
+                dealMap.put(apt.getAptSeq(), homeDealService.getDealsByHouse(apt.getAptSeq(), false));
+            }
         }
 
         Map<String, Object> result = new HashMap<>();
@@ -63,6 +64,7 @@ public class SearchController {
         result.put("dealMap", dealMap);
         return result;
     }
+
 
 
     @GetMapping("/sido")
@@ -78,7 +80,7 @@ public class SearchController {
 
     // 동 리스트
     @GetMapping("/dong")
-    public List<String> getDongList(@RequestParam("gugunName") String gugun) {
+    public List<Map<String, String>> getDongList(@RequestParam("gugunName") String gugun) {
         return homeInfoService.getDongList(gugun);
     }
 }

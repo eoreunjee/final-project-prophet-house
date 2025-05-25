@@ -9,11 +9,15 @@
           class="bg-white border rounded-lg p-4 shadow-sm cursor-pointer hover:bg-gray-50"
           @click="selectApt(apt)"
         >
-          <div class="flex justify-between items-center mb-1">
-            <div class="font-semibold text-lg text-gray-800">
+          <div class="justify-between items-center">
+            <div class="font-semibold text-lg text-gray-800 pb-2">
               {{ apt.aptName }}
             </div>
-            <p class="text-xs">{{ apt.roadNm + ' ' + apt.roadNmBonbun }} {{ apt.roadNmBubun === '0' ? '' : '-' + apt.roadNmBubun }}</p>
+            <p class="text-xs text-gray-600">
+              {{ apt.sidoName + ' ' + apt.gugunName +' '+ apt.dongName }}
+              {{ apt.roadNm + ' ' + apt.roadNmBonbun }}
+              {{ apt.roadNmBubun === '0' ? '' : '-' + apt.roadNmBubun }}
+            </p>
           </div>
           <div v-if="dealMap[apt.aptSeq] && dealMap[apt.aptSeq].length" class="text-sm text-gray-600">
             <div class="text-sm font-medium text-blue-600 mt-2">

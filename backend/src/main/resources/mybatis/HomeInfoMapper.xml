@@ -4,47 +4,41 @@
 <mapper namespace="com.ssafy.home.mapper.HomeInfoMapper">
 
 	<select id="getHousesByDong" resultType="HomeInfo">
-	  SELECT h.apt_seq     AS aptSeq,
+	  SELECT
+	    h.apt_seq     AS aptSeq,
 	         h.apt_nm      AS aptName,
+             d.sido_name   AS sidoName,
+             d.gugun_name   AS gugunName,
+             d.dong_name   AS dongName,
 	         h.road_nm     AS roadNm,
 	         h.road_nm_bonbun AS roadNmBonbun,
 	         h.road_nm_bubun AS roadNmBubun,
 	         h.build_year  AS buildYear,
 	         h.latitude,
 	         h.longitude
-	    FROM houseinfos h
-	   WHERE h.sgg_cd = LEFT(
-	                     (SELECT dong_code
-	                      FROM dongcodes
-	                      WHERE sido_name = #{sido}
-	                        AND gugun_name = #{gugun}
-	                        AND dong_name = #{dong}
-	                      LIMIT 1),
-	                     5)
-	     AND h.umd_cd = RIGHT(
-	                     (SELECT dong_code
-	                      FROM dongcodes
-	                      WHERE sido_name = #{sido}
-	                        AND gugun_name = #{gugun}
-	                        AND dong_name = #{dong}
-	                      LIMIT 1),
-	                     5)
-	     AND h.latitude IS NOT NULL
-	  ORDER BY h.apt_nm
+	  FROM houseinfos h
+      JOIN dongcodes d ON CONCAT(h.sgg_cd, h.umd_cd) = d.dong_code
+     WHERE d.dong_code = #{dongCode}
+	    AND h.latitude IS NOT NULL
 	</select>
 	
 	<!-- 아파트 이름만 검색 -->
 	<select id="findAllAptByName" resultType="com.ssafy.home.dto.HomeInfo">
-	  SELECT apt_seq     AS aptSeq,
-	         apt_nm      AS aptName,
-	         road_nm     AS roadNm,
-	         road_nm_bonbun AS roadNmBonbun,
-	         road_nm_bubun AS roadNmBubun,
-	         build_year  AS buildYear,
-	         latitude,
-	         longitude
-		FROM houseinfos
+	  SELECT h.apt_seq     AS aptSeq,
+	         h.apt_nm      AS aptName,
+             d.sido_name   AS sidoName,
+             d.gugun_name   AS gugunName,
+             d.dong_name   AS dongName,
+	         h.road_nm     AS roadNm,
+	         h.road_nm_bonbun AS roadNmBonbun,
+	         h.road_nm_bubun AS roadNmBubun,
+	         h.build_year  AS buildYear,
+	         h.latitude,
+	         h.longitude
+		FROM houseinfos h
+        LEFT JOIN dongcodes d on CONCAT(h.sgg_cd, h.umd_cd) = d.dong_code
 	  WHERE apt_nm LIKE CONCAT('%', #{aptName}, '%')
+		AND umd_cd
 	    AND latitude IS NOT NULL
 	</select>
 
@@ -63,8 +57,9 @@
      ORDER BY gugun_name
   </select>
 
-  <select id="getDongList" resultType="string">
-    SELECT DISTINCT dong_name
+  <select id="getDongList" resultType="map">
+    SELECT DISTINCT dong_name AS dongName,
+    	   dong_code AS dongCode
       FROM dongcodes
      WHERE gugun_name = #{gugun}
        AND dong_name IS NOT NULL
