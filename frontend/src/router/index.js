@@ -61,6 +61,11 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path: '/rentalScam',
+      name: 'rentalScam',
+      component: () => import('../components/RentalScam.vue')
+    }
   ],
 })
 

@@ -20,7 +20,9 @@
         >
           후기 게시판
         </router-link>
-        <router-link to=""></router-link>
+        <router-link to="/rentalScam">
+          전세사기 통계
+        </router-link>
       </nav>
     </div>
 

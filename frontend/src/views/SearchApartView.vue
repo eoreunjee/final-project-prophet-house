@@ -16,7 +16,37 @@
           :lat="parseFloat(apt.latitude)"
           :lng="parseFloat(apt.longitude)"
         />
+
+        <template v-if="showExperienceOverlay">
+          <KakaoMapCustomOverlay
+            v-for="(data, region) in experienceData"
+            :key="region"
+            :lat="regionCoords[region].lat"
+            :lng="regionCoords[region].lng"
+          >
+            <div
+              class="rounded-full text-white text-xs flex items-center justify-center"
+              :style="{
+                width: experienceToRadius(data) + 'px',
+                height: experienceToRadius(data) + 'px',
+                backgroundColor: experienceToColor(data),
+                opacity: 0.6,
+                transform: 'translate(-50%, -50%)',
+                position: 'absolute',
+                border: '1px solid #222'
+              }"
+            >
+              {{ region }}
+            </div>
+          </KakaoMapCustomOverlay>
+        </template>
       </KakaoMap>
+
+      <button @click="showExperienceOverlay = !showExperienceOverlay"
+              class="absolute top-4 right-4 z-15 bg-white border px-3 py-2 rounded text-sm shadow">
+        전세사기 경험률 {{ showExperienceOverlay ? '숨기기' : '보기' }}
+      </button>
+
 
       <!-- 검색 aside -->
       <aside v-show="showSearch[0]" class="absolute top-0 left-0 z-11 w-[400px] h-full bg-white shadow-right flex flex-col">
@@ -81,13 +111,19 @@
         <button @click="selectedApt = false" class="absolute right-3 top-2 rounded px-1 text-lg text-gray-400 hover:bg-gray-100">×</button>
         
         <!-- TODO ---------------예측 그래프 ------------------------>
-        <h2 class="text-lg font-bold">2026년 {{ selectedApt.dongName }} m²당 시세 예측 그래프</h2>
-        <div v-if="years && avgPrices && isPredicted" class="bg-white-100 h-[260px] items-center justify-center shadow-lg rounded shrink-0">
+        <h2 class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-purple-700">
+          2026년 {{ selectedApt.dongName }} m²당 AI 시세 예측
+        </h2>
+
+        <div v-if="isLoggedIn && years && avgPrices && isPredicted" class="bg-white-100 h-[260px] items-center justify-center shadow-lg rounded shrink-0">
           <Line :data="chartData" :options="chartOptions" />
           <div class="mt-6 text-center text-base text-gray-700 font-medium">
             2026년 예상 가격(만원/m²): <span class="text-red-600 font-bold">{{ predictedPrice.toLocaleString() }}</span><br>
             예측치 정확도 : <span class="text-blue-600 font-bold">{{ accuracy }}%</span>
           </div>
+        </div>
+        <div v-else class="bg-gray-200 h-[260px] flex items-center justify-center shadow-lg rounded shrink-0">
+          <p class="text-gray-500 text-center">로그인이 필요합니다</p>
         </div>
         <!---------------------- 예측 그래프 END -------------------->
 
@@ -109,10 +145,10 @@
             <table class="min-w-full table-fixed text-xs text-left text-gray-800">
               <thead class="bg-gray-100 text-gray-700 font-semibold">
                 <tr>
-                  <th class="px-4 py-2 border-b w-[20%] whitespace-nowrap">거래날짜</th>
-                  <th class="px-4 py-2 border-b w-[20%] whitespace-nowrap">층수 · 전용면적</th>
-                  <th class="px-4 py-2 border-b w-[20%] text-right whitespace-nowrap">거래금액</th>
-                  <th class="px-2 py-2 border-b w-[10%] text-center whitespace-nowrap">♥</th>
+                  <th class="px-4 py-2 border-b w-[15%] whitespace-nowrap">거래날짜</th>
+                  <th class="px-4 py-2 border-b w-[15%] whitespace-nowrap">층수 · 전용면적</th>
+                  <th class="px-4 py-2 border-b w-[15%] text-right whitespace-nowrap">거래금액</th>
+                  <th class="px-2 py-2 border-b w-[5%] text-center whitespace-nowrap">찜</th>
                 </tr>
               </thead>
               <tbody>
@@ -144,7 +180,7 @@
             </table>
 
             <!-- 페이지네이션 -->
-            <div class="h-16 flex justify-center items-center gap-1 bg-white text-sm border-t">
+            <div class="h-12 flex justify-center items-center gap-1 bg-white text-sm">
               <button
                 v-if="pageGroup[0] > 1"
                 @click="goToPage(pageGroup[0] - 1)"
@@ -168,7 +204,6 @@
               >다음</button>
             </div>
           </div>
-
           <div v-else class="text-gray-400">거래 내역이 없습니다.</div>
         </div>
       </aside>
@@ -180,8 +215,10 @@
 import { ref, reactive, computed, watch } from 'vue'
 import axios from 'axios'
 import RealpricePrediction from '@/components/RealpricePrediction.vue'
-import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps'
+import { KakaoMap, KakaoMapMarker, KakaoMapCustomOverlay} from 'vue3-kakao-maps'
 import { useKakao } from 'vue3-kakao-maps/@utils'
+import { userId } from '@/utils/auth'
+import { experienceData, regionCoords } from "@/assets/rentalScamData";
 
 useKakao(import.meta.env.VITE_KAKAO_MAP_API_KEY)
 
@@ -201,6 +238,7 @@ const pageSize = 8
 const maxVisibleButtons = 5
 const isSearchingApt = ref(false)
 const isLoadingPrediction = ref(false)
+
 // 아파트 목록 관련
 const aptSearchList = ref([])
 const totalAptCount = ref(0)
@@ -209,6 +247,23 @@ const aptPageSize = 20
 
 // 선택된 아파트의 거래내역
 const selectedAptDeals = ref([])
+
+// 로그인 확인
+const isLoggedIn = ref(!!userId.value)
+
+// 전세사기 데이터 토글
+const showExperienceOverlay = ref(false);
+
+function experienceToRadius(val) {
+  return 20 + val * 10;
+}
+function experienceToColor(val) {
+  if (val > 2.5) return "#e74c3c";
+  else if (val > 1.5) return "#f39c12";
+  else if (val > 0.7) return "#3498db";
+  else return "#2ecc71";
+}
+
 
 const validAptList = computed(() =>
   aptSearchList.value.filter(

@@ -5,6 +5,8 @@ import axios from 'axios';
 import './assets/main.css'; // Tailwind 연결
 import { setUsernameFromToken } from './utils/auth'
 import '@/assets/fonts.css'
+import 'leaflet/dist/leaflet.css'
+
 const app = createApp(App)
 
 setUsernameFromToken();
