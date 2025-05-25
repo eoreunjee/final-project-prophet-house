@@ -35,8 +35,17 @@
 	
 	<!-- 아파트 이름만 검색 -->
 	<select id="findAllAptByName" resultType="com.ssafy.home.dto.HomeInfo">
-	  SELECT * FROM houseinfos
-	  WHERE apt_name LIKE CONCAT('%', #{aptName}, '%')
+	  SELECT apt_seq     AS aptSeq,
+	         apt_nm      AS aptName,
+	         road_nm     AS roadNm,
+	         road_nm_bonbun AS roadNmBonbun,
+	         road_nm_bubun AS roadNmBubun,
+	         build_year  AS buildYear,
+	         latitude,
+	         longitude
+		FROM houseinfos
+	  WHERE apt_nm LIKE CONCAT('%', #{aptName}, '%')
+	    AND latitude IS NOT NULL
 	</select>
 
 

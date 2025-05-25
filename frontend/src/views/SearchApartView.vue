@@ -43,7 +43,15 @@
             <button @click="searchApt" :disabled="!isSearchEnabled" class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">검색</button>
           </div>
         </div>
-        <div class="flex-1 overflow-y-auto px-3 pb-6">
+        <!-- 로딩 화면 -->
+        <div v-if="isSearchingApt" class="flex justify-center items-center py-8">
+          <svg class="animate-spin h-6 w-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+          <span class="ml-3 text-sm text-gray-500">검색 중입니다...</span>
+        </div>
+        <div v-else class="flex-1 overflow-y-auto px-3 pb-6">
           <RealpricePrediction :apt-list="aptList" :deal-map="dealMap" @select-apt="handleSelectApt" />
         </div>
         
@@ -184,6 +192,9 @@ const dealMap = ref({})
 const currentPage = ref(1)
 const pageSize = 8
 const maxVisibleButtons = 5
+const isSearchingApt = ref(false)
+const isLoadingPrediction = ref(false)
+
 
 const handleSelectApt = (apt) => {
   selectedApt.value = apt
@@ -205,9 +216,16 @@ watch(() => showSearch.value[0], (isOpen) => {
 })
 
 
-const isSearchEnabled = computed(() => selectedSido.value && selectedGugun.value && selectedDong.value)
+const isSearchEnabled = computed(() => {
+  return (
+    aptName.value.trim() !== '' ||
+    (selectedSido.value && selectedGugun.value && selectedDong.value)
+  );
+});
+
 
 const searchApt = async () => {
+  isSearchingApt.value = true
   try {
     const response = await axios.get('http://localhost:8080/api/search/apt', {
       params: {
@@ -220,12 +238,18 @@ const searchApt = async () => {
     aptList.value = response.data.aptList
     dealMap.value = response.data.dealMap
     selectedApt.value = null
-
-    // 아파트 검색 후 예측도 같이 실행
+  } finally {
+    isSearchingApt.value = false
+  }
+  // 아파트 검색 후 별도 예측 시작 TODO 아파트 검색 후 예측도 같이 실행
+  isLoadingPrediction.value = true
+  try {
     await getPrediction();
     await getPredictionBar();
   } catch (error) {
     console.error('Error searching apartments:', error)
+  } finally {
+    isLoadingPrediction.value = false
   }
 }
 
