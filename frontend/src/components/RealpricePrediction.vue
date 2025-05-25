@@ -14,22 +14,21 @@
               {{ apt.aptName }}
             </div>
             <p class="text-xs text-gray-600">
-              {{ apt.sidoName + ' ' + apt.gugunName +' '+ apt.dongName }}
+              {{ apt.sidoName + ' ' + apt.gugunName + ' ' + apt.dongName }}
               {{ apt.roadNm + ' ' + apt.roadNmBonbun }}
               {{ apt.roadNmBubun === '0' ? '' : '-' + apt.roadNmBubun }}
             </p>
           </div>
-          <div v-if="dealMap[apt.aptSeq] && dealMap[apt.aptSeq].length" class="text-sm text-gray-600">
+          <!-- <div v-if="dealMap[apt.aptSeq]?.length" class="text-sm text-gray-600">
             <div class="text-sm font-medium text-blue-600 mt-2">
               평균 거래가: {{ getFormattedAverageAmount(apt.aptSeq) }}원
             </div>
-          </div>
+          </div> -->
         </div>
-
-        <!-- ✅ 더보기 버튼 위치 -->
-        <div v-if="displayedCount < aptList.length" class="text-center my-4">
+        <!-- 👇 이 부분 추가 -->
+        <div v-if="displayedAptList.length < aptList.length" class="text-center my-4">
           <button
-            @click="displayedCount += 10"
+            @click="loadMore"
             class="px-4 py-2 rounded hover:bg-gray-200"
           >
             ↓ 매물 더보기
@@ -45,39 +44,36 @@
         </div>
       </template>
     </section>
-
   </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref, computed } from 'vue'
+import { defineProps, defineEmits, ref, computed, watch } from 'vue'
 
 const props = defineProps({
-  aptList: Array,
-  dealMap: Object
+  aptList: Array
 })
 
-const emit = defineEmits(['select-apt'])
+const emit = defineEmits(['select-apt', 'load-more'])
 
-const displayedCount = ref(10) // 초기 표시할 수
-const displayedAptList = computed(() => props.aptList.slice(0, displayedCount.value))
+const loadMore = () => {
+  displayedCount.value += 10
+  emit('load-more')
+}
+
+const displayedCount = ref(10) // ⭐ 처음에 10개만 보여줌
+
+const displayedAptList = computed(() => {
+  return props.aptList.slice(0, displayedCount.value)
+})
 
 const selectApt = (apt) => {
   emit('select-apt', apt)
 }
 
-const formatNumberWithComma = (amount) => {
-  if (typeof amount !== 'number' || isNaN(amount)) return ''
-  amount *= 10000
-  return amount.toLocaleString('ko-KR')
-}
-
-const getFormattedAverageAmount = (aptSeq) => {
-  const deals = props.dealMap[aptSeq]
-  if (!deals || deals.length === 0) return ''
-  const sum = deals.reduce((acc, deal) => acc + parseInt(deal.dealAmount.replace(/,/g, '')), 0)
-  return formatNumberWithComma(Math.round(sum / deals.length))
-}
+watch(() => props.aptList, () => {
+  displayedCount.value = 10
+})
 </script>
 
 <style scoped>

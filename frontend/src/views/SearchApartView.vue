@@ -49,7 +49,11 @@
           <span class="ml-3 text-sm text-gray-500">검색 중입니다...</span>
         </div>
         <div v-else class="flex-1 overflow-y-auto px-3 pb-6">
-          <RealpricePrediction :apt-list="aptList" :deal-map="dealMap" @select-apt="handleSelectApt" />
+          <RealpricePrediction
+            :apt-list="aptSearchList"
+            @select-apt="handleSelectApt"
+            @load-more="handleLoadMore"
+            />
         </div>
         
       </aside>
@@ -165,7 +169,6 @@
             </div>
           </div>
 
-
           <div v-else class="text-gray-400">거래 내역이 없습니다.</div>
         </div>
       </aside>
@@ -193,23 +196,22 @@ const selectedDong = ref('')
 const sidoList = ref([])
 const gugunList = ref([])
 const dongList = ref([])
-const aptList = ref([])
-const dealMap = ref({})
 const currentPage = ref(1)
 const pageSize = 8
 const maxVisibleButtons = 5
 const isSearchingApt = ref(false)
 const isLoadingPrediction = ref(false)
+// 아파트 목록 관련
+const aptSearchList = ref([])
+const totalAptCount = ref(0)
+const aptSearchPage = ref(1)
+const aptPageSize = 20
 
-const handleSelectApt = (apt) => {
-  selectedApt.value = apt
-  currentPage.value = 1
-  coordinate.lat = parseFloat(apt.latitude)
-  coordinate.lng = parseFloat(apt.longitude)
-}
+// 선택된 아파트의 거래내역
+const selectedAptDeals = ref([])
 
 const validAptList = computed(() =>
-  aptList.value.filter(
+  aptSearchList.value.filter(
     apt => apt.latitude && apt.longitude && !isNaN(parseFloat(apt.latitude)) && !isNaN(parseFloat(apt.longitude))
   )
 )
@@ -220,39 +222,80 @@ watch(() => showSearch.value[0], (isOpen) => {
   }
 })
 
+const handleLoadMore = async () => {
+  aptSearchPage.value += 1
+  await fetchAptSearchList() // 기존에 push로 붙이도록 되어 있음
+}
 
 const isSearchEnabled = computed(() => {
   return aptName.value.trim() !== '' || selectedDong.value !== '';
 });
 
+async function fetchAptSearchList(reset = false) {
+  const response = await axios.get('http://localhost:8080/api/search/apt', {
+    params: {
+      dongCode: selectedDong.value || null,
+      aptName: aptName.value.trim() || null,
+      page: aptSearchPage.value,
+      size: aptPageSize
+    }
+  })
 
-const searchApt = async () => {
+  if (reset) {
+    aptSearchList.value = response.data.aptList
+  } else {
+    aptSearchList.value.push(...response.data.aptList)
+  }
+  totalAptCount.value = response.data.totalCount
+}
+
+const handleSelectApt = async (apt) => {
+  selectedApt.value = apt
+  currentPage.value = 1
+  coordinate.lat = parseFloat(apt.latitude)
+  coordinate.lng = parseFloat(apt.longitude)
+  console.log(apt.aptSeq)
+  await fetchSelectedAptDeals(apt.aptSeq)  // 👈 거래내역 요청 추가
+}
+
+async function searchApt() {
   console.log("📦 searchApt() 호출됨")
   isSearchingApt.value = true
   try {
-    const response = await axios.get('http://localhost:8080/api/search/apt', {
-      params: {
-        dongCode: selectedDong.value,
-        aptName: aptName.value.trim() !== '' ? aptName.value : null // !
-      }
-    })
-    aptList.value = response.data.aptList
-    dealMap.value = response.data.dealMap
+    aptSearchPage.value = 1  // 페이지 초기화
+    await fetchAptSearchList(true)  // ❗reset=true: 리스트 새로 세팅
     selectedApt.value = null
+  } catch (error) {
+    console.error('검색 실패:', error)
   } finally {
     isSearchingApt.value = false
   }
-  // TODO 아파트 검색 후 별도 예측 시작, 아파트 검색 후 예측도 같이 실행
+  // TODO 아파트 검색 후 별도 예측 시작
   isLoadingPrediction.value = true
   try {
-    await getPrediction();
-    await getPredictionBar();
+    await getPrediction()
+    await getPredictionBar()
   } catch (error) {
     console.error('Error searching apartments:', error)
   } finally {
     isLoadingPrediction.value = false
   }
 }
+
+
+const fetchSelectedAptDeals = async (aptSeq) => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/search/deals', {
+      params: { aptSeq }
+    })
+    console.log("에이피시퀄스랑께",aptSeq)
+    selectedAptDeals.value = response.data
+  } catch (e) {
+    console.error('거래내역 불러오기 실패:', e)
+    selectedAptDeals.value = []
+  }
+}
+
 
 const loadSido = async () => {
   const res = await axios.get('http://localhost:8080/api/search/sido')
@@ -286,8 +329,7 @@ watch(selectedGugun, (newGugun) => {
 })
 
 const sortedDeals = computed(() => {
-  const deals = dealMap.value[selectedApt.value?.aptSeq] || []
-  return [...deals].sort((a, b) => {
+  return [...selectedAptDeals.value].sort((a, b) => {
     const dateA = new Date(`${a.dealYear}-${a.dealMonth}-${a.dealDay}`)
     const dateB = new Date(`${b.dealYear}-${b.dealMonth}-${b.dealDay}`)
     const amountA = parseInt(a.dealAmount.replace(/,/g, ''))

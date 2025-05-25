@@ -9,13 +9,17 @@ import com.ssafy.home.dto.HomeInfo;
 
 @Mapper
 public interface HomeInfoMapper {
-    List<HomeInfo> getPagedHouses(@Param("page") int page, @Param("pageSize") int pageSize);
-
-    List<HomeInfo> getHousesByDong(@Param("dongCode")  String dongCode);
-    
-    List<HomeInfo> findAllAptByName(@Param("aptName") String aptName);
+	
+	List<HomeInfo> getAptListPaged(@Param("dongCode") String dongCode,
+					            @Param("aptName") String aptName,
+					            @Param("size") int size,
+					            @Param("offset") int offset);
+	
+	int countAptList(@Param("dongCode") String dongCode,
+					 @Param("aptName") String aptName);
 
     List<String> getSidoList();
+    
     List<String> getGugunList(@Param("sido") String sido);
     
     List<Map<String, String>> getDongList(String gugun);

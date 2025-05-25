@@ -18,20 +18,28 @@ public class HomeInfoServiceImpl implements HomeInfoService {
 	
 	private final HomeInfoMapper homeInfoMapper;
     
-    public List<HomeInfo> searchAptByNameUsingKMP(List<HomeInfo> allAptList, String keyword) {
-        List<HomeInfo> result = new ArrayList<>();
-
-        for (HomeInfo apt : allAptList) {
-            if (KMPUtil.kmpContains(apt.getAptName(), keyword)) {
-                result.add(apt);
-            }
-        }
-        return result;
-    }
+//    public List<HomeInfo> searchAptByNameUsingKMP(List<HomeInfo> allAptList, String keyword) {
+//        List<HomeInfo> result = new ArrayList<>();
+//
+//        for (HomeInfo apt : allAptList) {
+//            if (KMPUtil.kmpContains(apt.getAptName(), keyword)) {
+//                result.add(apt);
+//            }
+//        }
+//        return result;
+//    }
     
-    public List<HomeInfo> getHousesByDong(String dong) {
-        return homeInfoMapper.getHousesByDong(dong);
-    }
+	@Override
+	public List<HomeInfo> searchAptList(String dongCode, String aptName, int page, int size) {
+	    int offset = (page - 1) * size;
+	    return homeInfoMapper.getAptListPaged(dongCode, aptName, size, offset);
+	}
+
+	@Override
+	public int countAptList(String dongCode, String aptName) {
+	    return homeInfoMapper.countAptList(dongCode, aptName);
+	}
+
     
     public List<String> getSidoList() {
     	return homeInfoMapper.getSidoList();
@@ -43,9 +51,5 @@ public class HomeInfoServiceImpl implements HomeInfoService {
     public List<Map<String, String>> getDongList(String gugun) {
     	return homeInfoMapper.getDongList(gugun);
     }
-
-	public List<HomeInfo> searchAptByNameAll(String aptName) {
-		return homeInfoMapper.findAllAptByName(aptName);
-	}
 
 }

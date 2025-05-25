@@ -3,43 +3,36 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.home.mapper.HomeInfoMapper">
 
-	<select id="getHousesByDong" resultType="HomeInfo">
+	<select id="getAptListPaged" resultType="HomeInfo">
 	  SELECT
 	    h.apt_seq     AS aptSeq,
-	         h.apt_nm      AS aptName,
-             d.sido_name   AS sidoName,
-             d.gugun_name   AS gugunName,
-             d.dong_name   AS dongName,
-	         h.road_nm     AS roadNm,
-	         h.road_nm_bonbun AS roadNmBonbun,
-	         h.road_nm_bubun AS roadNmBubun,
-	         h.build_year  AS buildYear,
-	         h.latitude,
-	         h.longitude
+	    h.apt_nm      AS aptName,
+	    d.sido_name   AS sidoName,
+	    d.gugun_name  AS gugunName,
+	    d.dong_name   AS dongName,
+	    h.road_nm     AS roadNm,
+	    h.road_nm_bonbun AS roadNmBonbun,
+	    h.road_nm_bubun  AS roadNmBubun,
+	    h.build_year  AS buildYear,
+	    h.latitude,
+	    h.longitude
 	  FROM houseinfos h
-      JOIN dongcodes d ON CONCAT(h.sgg_cd, h.umd_cd) = d.dong_code
-     WHERE d.dong_code = #{dongCode}
+	  JOIN dongcodes d ON CONCAT(h.sgg_cd, h.umd_cd) = d.dong_code
+	  WHERE
+	    (#{dongCode} IS NULL OR d.dong_code = #{dongCode})
+	    AND (#{aptName} IS NULL OR h.apt_nm LIKE CONCAT('%', #{aptName}, '%'))
 	    AND h.latitude IS NOT NULL
+	  LIMIT #{size} OFFSET #{offset}
 	</select>
 	
-	<!-- 아파트 이름만 검색 -->
-	<select id="findAllAptByName" resultType="com.ssafy.home.dto.HomeInfo">
-	  SELECT h.apt_seq     AS aptSeq,
-	         h.apt_nm      AS aptName,
-             d.sido_name   AS sidoName,
-             d.gugun_name   AS gugunName,
-             d.dong_name   AS dongName,
-	         h.road_nm     AS roadNm,
-	         h.road_nm_bonbun AS roadNmBonbun,
-	         h.road_nm_bubun AS roadNmBubun,
-	         h.build_year  AS buildYear,
-	         h.latitude,
-	         h.longitude
-		FROM houseinfos h
-        LEFT JOIN dongcodes d on CONCAT(h.sgg_cd, h.umd_cd) = d.dong_code
-	  WHERE apt_nm LIKE CONCAT('%', #{aptName}, '%')
-		AND umd_cd
-	    AND latitude IS NOT NULL
+	<select id="countAptList" resultType="int">
+	  SELECT COUNT(*)
+	  FROM houseinfos h
+	  JOIN dongcodes d ON CONCAT(h.sgg_cd, h.umd_cd) = d.dong_code
+	  WHERE
+	    (#{dongCode} IS NULL OR d.dong_code = #{dongCode})
+	    AND (#{aptName} IS NULL OR h.apt_nm LIKE CONCAT('%', #{aptName}, '%'))
+	    AND h.latitude IS NOT NULL
 	</select>
 
 

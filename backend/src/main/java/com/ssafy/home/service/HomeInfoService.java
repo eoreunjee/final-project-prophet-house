@@ -7,11 +7,13 @@ import com.ssafy.home.dto.HomeInfo;
 
 public interface HomeInfoService {
 
-	List<HomeInfo> searchAptByNameUsingKMP(List<HomeInfo> allAptList, String keyword);
+//	List<HomeInfo> searchAptByNameUsingKMP(List<HomeInfo> allAptList, String keyword);
 	
-	List<HomeInfo> searchAptByNameAll(String aptName);
-	
-	public List<HomeInfo> getHousesByDong(String dong);
+	// 페이징 기반 아파트 검색
+	List<HomeInfo> searchAptList(String dongCode, String aptName, int page, int size);
+
+	// 총 개수 조회
+	int countAptList(String dongCode, String aptName);
 	
 	List<String> getSidoList();
 	
