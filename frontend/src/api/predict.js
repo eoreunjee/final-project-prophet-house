@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export function fetchPredictionBar(payload) {
-  return axios.post('http://localhost:8000/predict_bar', payload, {
+  return axios.post('http://192.168.205.75:8000/predict_bar', payload, {
     headers: {
       'Content-Type': 'application/json'
     }
@@ -10,7 +10,7 @@ export function fetchPredictionBar(payload) {
 }
 
 export function fetchPrediction(payload) {
-  return axios.post('http://localhost:8000/predict', payload, {
+  return axios.post('http://192.168.205.75:8000/predict', payload, {
     headers: {
       'Content-Type': 'application/json'
     }

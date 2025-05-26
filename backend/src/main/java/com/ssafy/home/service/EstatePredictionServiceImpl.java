@@ -1,5 +1,6 @@
 package com.ssafy.home.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +12,9 @@ import com.ssafy.home.dto.EstatePredictionResonse;
 public class EstatePredictionServiceImpl implements EstatePredictionService{
 	
 	private final RestTemplate restTemplate;
+	
+	@Value("${fastapi.url}")
+	private String fastApiUrl;
 
     public EstatePredictionServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -18,7 +22,7 @@ public class EstatePredictionServiceImpl implements EstatePredictionService{
 
     @Override
     public EstatePredictionResonse predict(EstatePredictionRequest request) {
-        String fastApiUrl = "http://192.168.205.75:8000/predict";
+//        String fastApiUrl = "http://192.168.205.75:8000/predict";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
