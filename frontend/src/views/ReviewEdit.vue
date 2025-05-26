@@ -16,7 +16,7 @@
 
         <select v-model="selectedDong" class="border px-2 py-1 rounded w-1/3">
             <option disabled value="">동 선택</option>
-            <option v-for="d in dongList" :key="d" :value="d">{{ d }}</option>
+            <option v-for="d in dongList" :key="d.dongCode" :value="d.dongName">{{ d.dongName }}</option>
         </select>
       </div>
 

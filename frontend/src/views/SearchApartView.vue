@@ -42,10 +42,10 @@
         </template>
       </KakaoMap>
 
-      <button @click="showExperienceOverlay = !showExperienceOverlay"
+      <!-- <button @click="showExperienceOverlay = !showExperienceOverlay"
               class="absolute top-4 right-4 z-15 bg-white border px-3 py-2 rounded text-sm shadow">
         전세사기 경험률 {{ showExperienceOverlay ? '숨기기' : '보기' }}
-      </button>
+      </button> -->
 
 
       <!-- 검색 aside -->
@@ -164,7 +164,7 @@
                   <th class="px-4 py-2 border-b w-[15%] whitespace-nowrap">거래날짜</th>
                   <th class="px-4 py-2 border-b w-[15%] whitespace-nowrap">층수 · 전용면적</th>
                   <th class="px-4 py-2 border-b w-[15%] text-right whitespace-nowrap">거래금액</th>
-                  <th class="px-2 py-2 border-b w-[5%] text-center whitespace-nowrap">찜</th>
+                  <!-- <th class="px-2 py-2 border-b w-[5%] text-center whitespace-nowrap">찜</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -182,7 +182,7 @@
                   <td class="px-4 py-2 border-b whitespace-nowrap text-right">
                     {{ formatNumberWithComma(parseInt(deal.dealAmount.replace(/,/g, ''))) }}원
                   </td>
-                  <td class="px-2 py-2 border-b text-center">
+                  <!-- <td class="px-2 py-2 border-b text-center">
                     <button
                       @click="toggleFavorite(deal)"
                       class="text-gray-400 hover:text-red-500 transition-colors duration-200"
@@ -190,7 +190,7 @@
                     >
                       ♥
                     </button>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>

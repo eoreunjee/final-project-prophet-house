@@ -42,13 +42,13 @@
           />
         </div>
         <div class="flex items-center mb-4">
-          <input
+          <!-- <input
             id="saveEmail"
             type="checkbox"
             v-model="saveEmail"
             class="mr-2"
           />
-          <label for="saveEmail" class="text-sm text-gray-600">아이디 저장</label>
+          <label for="saveEmail" class="text-sm text-gray-600">아이디 저장</label> -->
         </div>
         <button
           type="submit"
@@ -56,12 +56,12 @@
         >로그인</button>
         <div class="flex justify-between text-xs text-gray-500 mb-4">
           <span></span>
-          <a href="#" class="hover:underline">이메일 · 비밀번호 찾기</a>
+          <!-- <a href="#" class="hover:underline">이메일 · 비밀번호 찾기</a> -->
         </div>
       </form>
 
       <!-- 소셜 로그인 -->
-      <div class="flex justify-center space-x-5 mb-6">
+      <!-- <div class="flex justify-center space-x-5 mb-6">
         <button class="w-10 h-10 rounded-full bg-[#03cf5d] flex items-center justify-center">
           <span class="text-white text-xl font-bold">N</span>
         </button>
@@ -76,7 +76,7 @@
             <path d="M29 16c0-7.2-5.8-13-13-13S3 8.8 3 16c0 6.5 4.8 11.8 11 12.8v-9.1H10v-3.7h4V13c0-3.9 2.4-6 5.9-6 1.7 0 3.5.3 3.5.3v3.8h-2c-2 0-2.6 1.2-2.6 2.5v3h4.4l-.7 3.7h-3.7v9.1C24.2 27.8 29 22.5 29 16z"/>
           </svg>
         </button>
-      </div>
+      </div> -->
 
       <!-- 회원가입 안내 -->
       <div class="border-t pt-4 flex justify-between items-center text-sm">
@@ -112,7 +112,7 @@ const emit = defineEmits(['close'])
 
 const id = ref('')
 const password = ref('')
-const saveEmail = ref(false)
+// const saveEmail = ref(false)
 
 const router = useRouter()
 

@@ -5,7 +5,7 @@
     <div class="border-b mb-6">
       <nav class="flex space-x-6 text-sm font-medium text-gray-600">
         <button @click="tab = 'info'" :class="tab === 'info' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5] font-bold text-lg' : ''">내 정보</button>
-        <button @click="tab = 'wishlist'" :class="tab === 'wishlist' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5] font-bold text-lg' : ''">찜 목록</button>
+        <!-- <button @click="tab = 'wishlist'" :class="tab === 'wishlist' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5] font-bold text-lg' : ''">찜 목록</button> -->
         <button @click="tab = 'reviews'" :class="tab === 'reviews' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5] font-bold text-lg' : ''">내가 쓴 게시글</button>
         <button @click="tab = 'comments'" :class="tab === 'comments' ? 'text-[#4DA1F5] border-b-2 border-[#4DA1F5] font-bold text-lg' : ''">내 댓글</button>
       </nav>
@@ -55,13 +55,13 @@
     </div>
 
     <!-- 찜 목록 탭 -->
-    <div v-if="tab === 'wishlist'" class="space-y-4">
+    <!-- <div v-if="tab === 'wishlist'" class="space-y-4">
       <p v-if="wishlist.length < 1">찜한 매물이 없습니다</p>
       <div v-for="item in wishlist" :key="item.id" class="p-4 border rounded shadow-sm">
         <p class="font-semibold">{{ item.title }}</p>
         <p class="text-sm text-gray-500">{{ item.address }}</p>
       </div>
-    </div>
+    </div> -->
 
     <!-- 내가 쓴 게시글 탭 -->
     <div v-if="tab === 'reviews'" class="space-y-4">
