@@ -154,7 +154,7 @@ onMounted(async () => {
   if (!token) return alert('로그인이 필요합니다.')
 
   try {
-    const res = await axios.get('http://localhost:8080/api/user/me', {
+    const res = await axios.get('http://192.168.205.75:8080/api/user/me', {
       headers: { Authorization: `Bearer ${token}` }
     })
 
@@ -172,13 +172,13 @@ onMounted(async () => {
     form.value.birth = data.birthDate
 
     // ✅ 본인이 쓴 리뷰 불러오기
-    const reviewRes = await axios.get('http://localhost:8080/api/reviews/myReviews', {
+    const reviewRes = await axios.get('http://192.168.205.75:8080/api/reviews/myReviews', {
       params: { userId: data.id },
       headers: { Authorization: `Bearer ${token}` }
     })
     reviews.value = reviewRes.data
 
-    const commentRes = await axios.get('http://localhost:8080/api/reviews/myComments', {
+    const commentRes = await axios.get('http://192.168.205.75:8080/api/reviews/myComments', {
         params: { userId: data.id },
         headers: { Authorization: `Bearer ${token}` }
     })
@@ -196,7 +196,7 @@ const updateMyinfo = async () => {
   if (!token) return alert('로그인이 필요합니다.')
 
   try {
-    await axios.put('http://localhost:8080/api/user/update', {
+    await axios.put('http://192.168.205.75:8080/api/user/update', {
       id: user.value.id,
       name: form.value.name,
       email: form.value.email,
@@ -244,7 +244,7 @@ const withdraw = async () => {
 
   const token = localStorage.getItem('token')
   try {
-    await axios.delete(`http://localhost:8080/api/user/${user.value.id}`, {
+    await axios.delete(`http://192.168.205.75:8080/api/user/${user.value.id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     alert('회원 탈퇴가 완료되었습니다.')

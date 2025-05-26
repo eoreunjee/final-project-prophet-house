@@ -81,7 +81,7 @@ const handleWriteClick = () => {
 
 onMounted(async () => {
   try {
-    const res = await axios.get('http://localhost:8080/api/reviews')
+    const res = await axios.get('http://192.168.205.75:8080/api/reviews')
     reviews.value = res.data
   } catch (err) {
     console.error('후기 목록 불러오기 실패', err)

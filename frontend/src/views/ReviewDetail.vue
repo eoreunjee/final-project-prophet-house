@@ -87,10 +87,10 @@ const router = useRouter()
 const isLoggedIn = ref(!!userId.value)
 
 onMounted(async () => {
-  const reviewRes = await axios.get(`http://localhost:8080/api/reviews/${reviewId}`)
+  const reviewRes = await axios.get(`http://192.168.205.75:8080/api/reviews/${reviewId}`)
   review.value = reviewRes.data
 
-  const commentRes = await axios.get(`http://localhost:8080/api/reviews/${reviewId}/comments`)
+  const commentRes = await axios.get(`http://192.168.205.75:8080/api/reviews/${reviewId}/comments`)
   comments.value = commentRes.data
 })
 
@@ -107,18 +107,18 @@ function formatDate(dateString) {
 
 async function submitComment() {
   if (!newComment.value.trim()) return
-  await axios.post(`http://localhost:8080/api/reviews/${reviewId}/comments`, {
+  await axios.post(`http://192.168.205.75:8080/api/reviews/${reviewId}/comments`, {
     userId: userId.value,
     content: newComment.value
   })
-  const res = await axios.get(`http://localhost:8080/api/reviews/${reviewId}/comments`)
+  const res = await axios.get(`http://192.168.205.75:8080/api/reviews/${reviewId}/comments`)
   comments.value = res.data
   newComment.value = ''
 }
 
 async function deleteComment(commentId) {
-  await axios.delete(`http://localhost:8080/api/reviews/${reviewId}/comments/${commentId}`)
-  const res = await axios.get(`http://localhost:8080/api/reviews/${reviewId}/comments`)
+  await axios.delete(`http://192.168.205.75:8080/api/reviews/${reviewId}/comments/${commentId}`)
+  const res = await axios.get(`http://192.168.205.75:8080/api/reviews/${reviewId}/comments`)
   comments.value = res.data
 }
 
@@ -131,7 +131,7 @@ async function deleteReview() {
   if (!ok) return;
 
   try {
-    await axios.delete(`http://localhost:8080/api/reviews/${reviewId}`);
+    await axios.delete(`http://192.168.205.75:8080/api/reviews/${reviewId}`);
     alert("삭제 완료!");
     window.location.href = "/reviews/list"; // 또는 router.push
   } catch (err) {

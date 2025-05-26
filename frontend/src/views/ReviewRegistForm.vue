@@ -86,7 +86,7 @@ const selectedDong = ref('')
 onMounted(fetchSido)
 
 async function fetchSido() {
-  const res = await axios.get('http://localhost:8080/api/search/sido')
+  const res = await axios.get('http://192.168.205.75:8080/api/search/sido')
   sidoList.value = res.data
 }
 
@@ -94,7 +94,7 @@ async function fetchGugun() {
   selectedGugun.value = ''
   selectedDong.value = ''
   dongList.value = []
-  const res = await axios.get('http://localhost:8080/api/search/gugun', {
+  const res = await axios.get('http://192.168.205.75:8080/api/search/gugun', {
     params: { sidoName: selectedSido.value }
   })
   gugunList.value = res.data
@@ -102,7 +102,7 @@ async function fetchGugun() {
 
 async function fetchDong() {
   selectedDong.value = ''
-  const res = await axios.get('http://localhost:8080/api/search/dong', {
+  const res = await axios.get('http://192.168.205.75:8080/api/search/dong', {
     params: { gugunName: selectedGugun.value }
   })
   dongList.value = res.data
@@ -112,7 +112,7 @@ async function submitReview() {
   const location = `${selectedSido.value} ${selectedGugun.value} ${selectedDong.value}`
 
   try {
-    await axios.post('http://localhost:8080/api/reviews', {
+    await axios.post('http://192.168.205.75:8080/api/reviews', {
       userId: userId.value,
       dealType: form.value.dealType,
       location,

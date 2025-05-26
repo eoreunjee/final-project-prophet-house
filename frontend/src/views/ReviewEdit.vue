@@ -68,23 +68,23 @@ const selectedGugun = ref('')
 const selectedDong = ref('')
 
 async function loadSido() {
-  const res = await axios.get("http://localhost:8080/api/search/sido")
+  const res = await axios.get("http://192.168.205.75:8080/api/search/sido")
   sidoList.value = res.data
 }
 
 async function loadGugun(sido) {
-  const res = await axios.get(`http://localhost:8080/api/search/gugun?sidoName=${sido}`)
+  const res = await axios.get(`http://192.168.205.75:8080/api/search/gugun?sidoName=${sido}`)
   gugunList.value = res.data
 }
 
 async function loadDong(sido, gugun) {
-  const res = await axios.get(`http://localhost:8080/api/search/dong?sidoName=${sido}&gugunName=${gugun}`)
+  const res = await axios.get(`http://192.168.205.75:8080/api/search/dong?sidoName=${sido}&gugunName=${gugun}`)
   dongList.value = res.data
 }
 
 
 onMounted(async () => {
-  const res = await axios.get(`http://localhost:8080/api/reviews/${reviewId}`)
+  const res = await axios.get(`http://192.168.205.75:8080/api/reviews/${reviewId}`)
   const data = res.data
 
   if (data.userId !== userId.value) {
@@ -129,7 +129,7 @@ async function onGugunChange() {
 
 async function submitEdit() {
   try {
-    await axios.put(`http://localhost:8080/api/reviews/${reviewId}`, {
+    await axios.put(`http://192.168.205.75:8080/api/reviews/${reviewId}`, {
       location: `${selectedSido.value} ${selectedGugun.value} ${selectedDong.value}`,
       dealType: form.value.dealType,
       content: form.value.content

@@ -48,7 +48,7 @@ const news = ref([])
 
 const fetchNews = async () => {
   try {
-    const res = await axios.get('http://localhost:8080/api/news', {
+    const res = await axios.get('http://192.168.205.75:8080/api/news', {
       params: { query: selectedKeyword.value }
     })
     news.value = res.data

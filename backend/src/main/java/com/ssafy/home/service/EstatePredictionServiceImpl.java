@@ -18,7 +18,7 @@ public class EstatePredictionServiceImpl implements EstatePredictionService{
 
     @Override
     public EstatePredictionResonse predict(EstatePredictionRequest request) {
-        String fastApiUrl = "http://localhost:8000/predict";
+        String fastApiUrl = "http://192.168.205.75:8000/predict";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

@@ -305,7 +305,7 @@ const isSearchEnabled = computed(() => {
 });
 
 async function fetchAptSearchList(reset = false) {
-  const response = await axios.get('http://localhost:8080/api/search/apt', {
+  const response = await axios.get('http://192.168.205.75:8080/api/search/apt', {
     params: {
       dongCode: selectedDong.value || null,
       aptName: aptName.value.trim() || null,
@@ -395,7 +395,7 @@ watch(aptSearchList, async (newList) => {
 
 const fetchSelectedAptDeals = async (aptSeq) => {
   try {
-    const response = await axios.get('http://localhost:8080/api/search/deals', {
+    const response = await axios.get('http://192.168.205.75:8080/api/search/deals', {
       params: { aptSeq }
     })
     selectedAptDeals.value = response.data
@@ -407,17 +407,17 @@ const fetchSelectedAptDeals = async (aptSeq) => {
 
 
 const loadSido = async () => {
-  const res = await axios.get('http://localhost:8080/api/search/sido')
+  const res = await axios.get('http://192.168.205.75:8080/api/search/sido')
   sidoList.value = res.data
 }
 const loadGugun = async () => {
-  const res = await axios.get('http://localhost:8080/api/search/gugun', { params: { sidoName: selectedSido.value } })
+  const res = await axios.get('http://192.168.205.75:8080/api/search/gugun', { params: { sidoName: selectedSido.value } })
   gugunList.value = res.data
   selectedGugun.value = ''
   selectedDong.value = ''
 }
 const loadDong = async () => {
-  const res = await axios.get('http://localhost:8080/api/search/dong', { params: { gugunName: selectedGugun.value } })
+  const res = await axios.get('http://192.168.205.75:8080/api/search/dong', { params: { gugunName: selectedGugun.value } })
   dongList.value = res.data
   selectedDong.value = ''
 }

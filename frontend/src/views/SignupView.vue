@@ -100,7 +100,7 @@ const register = async () => {
   }
 
   try {
-    await axios.post('http://localhost:8080/api/user/register', {
+    await axios.post('http://192.168.205.75:8080/api/user/register', {
       name: form.value.name,
       id: form.value.id,
       email: form.value.email,
