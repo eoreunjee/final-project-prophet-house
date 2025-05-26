@@ -22,4 +22,22 @@
 	    ORDER BY deal_year DESC, deal_month DESC, deal_day DESC
 	</select>
 	
+	<!-- dongcodes에서 dong_code 찾기 -->
+	<select id="findDongCode" resultType="string">
+	  SELECT dong_code
+	    FROM dongcodes
+	   WHERE sido_name = #{sido}
+	     AND gugun_name = #{gugun}
+	     AND dong_name = #{dong}
+	   LIMIT 1
+	</select>
+	
+	<!-- region_dong에서 regionDongName 찾기 -->
+	<select id="findRegionDongName" resultType="string">
+	  SELECT regionDongName
+	    FROM region_dong
+	   WHERE dong_code = #{dongCode}
+	   LIMIT 1
+	</select>
+	
 </mapper>

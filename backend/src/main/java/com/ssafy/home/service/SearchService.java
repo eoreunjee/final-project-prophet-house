@@ -11,4 +11,6 @@ public interface SearchService {
 	List<HomeInfo> searchAptsByName(String aptName);
 	
 	Map<String, List<HomeDeal>> searchAptsByRegion(List<HomeInfo> aptList);
+	
+	String getRegionDongName(String sido, String gugun, String dong);
 }

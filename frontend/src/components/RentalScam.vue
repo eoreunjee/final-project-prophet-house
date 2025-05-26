@@ -2,7 +2,7 @@
   <LMap
     :zoom="7"
     :center="[36.5, 127.8]"
-    style="height: 800px; width: 100%"
+    style="height: 90vh; width: 100%;"
     :preferCanvas="false"
   >
     <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

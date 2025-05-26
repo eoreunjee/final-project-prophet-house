@@ -17,7 +17,7 @@ public class JwtUtil {
     private String secret;
 
     private Key key;
-    private final long EXPIRATION_TIME = 1000 * 60 * 30; // 30분
+    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 2; // 2시간
 
     @PostConstruct
     public void init() {

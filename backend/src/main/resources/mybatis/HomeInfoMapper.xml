@@ -7,6 +7,7 @@
 	  SELECT
 	    h.apt_seq     AS aptSeq,
 	    h.apt_nm      AS aptName,
+	    LEFT(d.dong_code, 5)	  AS dongCode,
 	    d.sido_name   AS sidoName,
 	    d.gugun_name  AS gugunName,
 	    d.dong_name   AS dongName,

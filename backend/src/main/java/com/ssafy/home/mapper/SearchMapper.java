@@ -13,5 +13,12 @@ public interface SearchMapper {
 	
 	List<HomeInfo> searchAptsByName(@Param("aptName") String aptName);
 	List<HomeDeal> selectDealsByAptSeq(@Param("aptSeqList") List<String> aptSeqList);
+	
+	String findDongCode(
+			@Param("sido") String sido,
+            @Param("gugun") String gugun,
+            @Param("dong") String dong);
+
+	String findRegionDongName(@Param("dongCode") String dongCode);
 
 }

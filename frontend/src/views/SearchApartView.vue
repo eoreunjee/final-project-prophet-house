@@ -106,6 +106,7 @@
               selectedApt.roadNm + ' ' + selectedApt.roadNmBonbun
             }}
             {{ selectedApt.roadNmBubun === '0' ? '' : '-' + selectedApt.roadNmBubun }}
+            {{ selectedApt.dongCode }}
           </p>
         </div>
         <button @click="selectedApt = false" class="absolute right-3 top-2 rounded px-1 text-lg text-gray-400 hover:bg-gray-100">×</button>
@@ -115,7 +116,17 @@
           2026년 {{ selectedApt.dongName }} m²당 AI 시세 예측
         </h2>
 
-        <div v-if="isLoggedIn && years && avgPrices && isPredicted" class="bg-white-100 h-[260px] items-center justify-center shadow-lg rounded shrink-0">
+        <!-- 예측 로딩 중 -->
+        <div v-if="isLoadingPrediction" class="flex justify-center items-center h-[260px] bg-gray-100 rounded shadow">
+          <svg class="animate-spin h-6 w-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+          <span class="ml-3 text-sm text-gray-600">예측 결과 불러오는 중...</span>
+        </div>
+
+        <!-- 예측 완료 시 -->
+        <div v-else-if="isLoggedIn && years && avgPrices && isPredicted" class="bg-white-100 h-[260px] items-center justify-center shadow-lg rounded shrink-0">
           <Line :data="chartData" :options="chartOptions" />
           <div class="mt-6 text-center text-base text-gray-700 font-medium">
             2026년 예상 가격(만원/m²): <span class="text-red-600 font-bold">{{ predictedPrice.toLocaleString() }}</span><br>
@@ -309,33 +320,70 @@ const handleSelectApt = async (apt) => {
   currentPage.value = 1
   coordinate.lat = parseFloat(apt.latitude)
   coordinate.lng = parseFloat(apt.longitude)
-  console.log(apt.aptSeq)
-  await fetchSelectedAptDeals(apt.aptSeq)  // 👈 거래내역 요청 추가
+
+  // regionDongName 구성
+  let dongCodePart = selectedDong.value ? selectedDong.value.slice(0, 5) : apt.dongCode?.slice(0, 5)
+  let dongNamePart = apt.dongName?.trim()
+
+  if (!dongCodePart || !dongNamePart) {
+    console.error('🚫 regionDongName 생성 실패: 동코드 또는 동이름 누락')
+    return
+  }
+
+  regionDongName.value = `${dongCodePart}_${dongNamePart}`
+  await fetchSelectedAptDeals(apt.aptSeq)
+
+  // ✅ 이름으로만 검색한 경우에만 예측 다시 호출
+  if (!selectedDong.value) {
+    isLoadingPrediction.value = true
+    try {
+      console.log("🔍 호출 전 regionDongName:", regionDongName.value)
+      await getPrediction()
+      await getPredictionBar()
+    } catch (error) {
+      console.error('예측 요청 실패:', error)
+    } finally {
+      isLoadingPrediction.value = false
+    }
+  }
 }
 
+
+// 아파트 검색 함수
 async function searchApt() {
   console.log("📦 searchApt() 호출됨")
   isSearchingApt.value = true
   try {
-    aptSearchPage.value = 1  // 페이지 초기화
-    await fetchAptSearchList(true)  // ❗reset=true: 리스트 새로 세팅
+    aptSearchPage.value = 1
+    await fetchAptSearchList(true)
     selectedApt.value = null
+
   } catch (error) {
     console.error('검색 실패:', error)
   } finally {
     isSearchingApt.value = false
   }
-  // TODO 아파트 검색 후 별도 예측 시작
-  isLoadingPrediction.value = true
-  try {
-    await getPrediction()
-    await getPredictionBar()
-  } catch (error) {
-    console.error('Error searching apartments:', error)
-  } finally {
-    isLoadingPrediction.value = false
-  }
 }
+
+// ✅ 동으로 검색된 경우 자동 예측 (아파트 리스트가 준비되면 실행)
+watch(aptSearchList, async (newList) => {
+  if (selectedDong.value && newList.length > 0) {
+    const apt = newList[0]
+    selectedApt.value = apt
+    regionDongName.value = `${selectedDong.value.slice(0, 5)}_${apt.dongName}`
+
+    await fetchSelectedAptDeals(apt.aptSeq)
+    try {
+      isLoadingPrediction.value = true
+      await getPrediction()
+      await getPredictionBar()
+    } catch (error) {
+      console.error('예측 요청 실패:', error)
+    } finally {
+      isLoadingPrediction.value = false
+    }
+  }
+})
 
 
 const fetchSelectedAptDeals = async (aptSeq) => {
@@ -343,7 +391,6 @@ const fetchSelectedAptDeals = async (aptSeq) => {
     const response = await axios.get('http://localhost:8080/api/search/deals', {
       params: { aptSeq }
     })
-    console.log("에이피시퀄스랑께",aptSeq)
     selectedAptDeals.value = response.data
   } catch (e) {
     console.error('거래내역 불러오기 실패:', e)
@@ -452,7 +499,7 @@ const chartData = computed(() => ({
   labels: years.value,
   datasets: [{
     label: '연평균 ㎡당 실거래가',
-    data: avgPrices,
+    data: avgPrices.value,
     borderColor: lineColors.value,
     backgroundColor: 'rgba(54,162,235,0.1)',
     pointBackgroundColor: pointColors.value,
@@ -499,12 +546,24 @@ async function getPredictionBar() {
     region_dong_name: regionDongName.value,
     target_year: 2026
   })
-  console.log('예측 API 응답:', response.data)
-  years.value = response.data.years
-  avgPrices.value = response.data.avgPrices
-  isPredicted.value = response.data.isPredicted
-  predictedPrice.value = response.data.predictedPrice
-  accuracy.value = response.data.accuracy
+
+
+  const rawYears = response.data.years;
+  const rawAvgPrices = response.data.avgPrices;
+  const rawIsPredicted = response.data.isPredicted;
+
+  console.log("🔥 years:", rawYears);
+  console.log("🔥 avgPrices:", rawAvgPrices);
+  console.log("🔥 isPredicted:", rawIsPredicted);
+
+  // ✅ 숫자만 필터링해서 할당
+  years.value = Array.isArray(rawYears) ? rawYears.filter(y => typeof y === 'number') : [];
+  avgPrices.value = Array.isArray(rawAvgPrices) ? rawAvgPrices.filter(p => typeof p === 'number') : [];
+  isPredicted.value = Array.isArray(rawIsPredicted) ? rawIsPredicted : [];
+
+  predictedPrice.value = response.data.predictedPrice;
+  accuracy.value = response.data.accuracy;
+
 }
 
 /** ---------------------------- 예측 그래프 END -----------------------------*/

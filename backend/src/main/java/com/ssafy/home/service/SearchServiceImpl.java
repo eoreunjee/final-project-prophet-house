@@ -34,4 +34,23 @@ public class SearchServiceImpl implements SearchService {
 	    // aptSeq 기준으로 groupBy
 	    return deals.stream().collect(Collectors.groupingBy(HomeDeal::getAptSeq));
 	}
+	
+	@Override
+    public String getRegionDongName(String sido, String gugun, String dong) {
+        String dongCode = searchMapper.findDongCode(sido, gugun, dong);
+        if (dongCode == null) return null;
+        
+        // 소수점 제거
+        if (dongCode.contains(".")) {
+            dongCode = dongCode.substring(0, dongCode.indexOf('.'));
+        }
+
+        // 10자리라면 앞 5자리만 사용
+        if (dongCode.length() >= 5) {
+            dongCode = dongCode.substring(0, 5);
+        }
+
+        String regionDongName = dongCode + "_" + dong;
+        return regionDongName;
+    }
 }
