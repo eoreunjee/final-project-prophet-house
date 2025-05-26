@@ -1,17 +1,19 @@
 <template>
+  <div>
   <LMap
-    :zoom="7"
-    :center="[36.5, 127.8]"
-    style="height: 90vh; width: 100%;"
-    :preferCanvas="false"
-  >
-    <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-    <LGeoJson
-      :geojson="geojson"
-      :options-style="styleFeature"
-      :options-onEachFeature="onEachFeature"
-    />
-  </LMap>
+      :zoom="7"
+      :center="[36.5, 127.8]"
+      style="height: 91vh; width: 100%;"
+      :preferCanvas="false"
+    >
+      <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <LGeoJson
+        :geojson="geojson"
+        :options-style="styleFeature"
+        :options-onEachFeature="onEachFeature"
+      />
+    </LMap>
+  </div>
 </template>
 
 <script setup>

@@ -145,7 +145,7 @@ const form = ref({
   joinedAt: ''
 })
 
-const wishlist = ref([])
+// const wishlist = ref([])
 const reviews = ref([])
 const comments = ref([])
 

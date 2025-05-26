@@ -20,7 +20,9 @@
         >
           후기 게시판
         </router-link>
-        <router-link to="/rentalScam">
+        <router-link
+          to="/rentalScam"
+          :class="[$route.path.startsWith('/rentalScam') ? 'text-[#4DA1F5]' : 'text-gray-800', 'hover:text-[#4DA1F5]']">
           전세사기 통계
         </router-link>
       </nav>
