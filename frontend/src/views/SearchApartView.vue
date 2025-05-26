@@ -125,6 +125,11 @@
           <span class="ml-3 text-sm text-gray-600">예측 결과 불러오는 중...</span>
         </div>
 
+        <!-- 예측 실패 시 -->
+        <div v-else-if="predictionFailed" class="bg-gray-100 h-[260px] flex items-center justify-center shadow-lg rounded shrink-0">
+          <p class="text-gray-600 text-center">⚠️ 데이터 준비 중입니다.</p>
+        </div>
+
         <!-- 예측 완료 시 -->
         <div v-else-if="isLoggedIn && years && avgPrices && isPredicted" class="bg-white-100 h-[260px] items-center justify-center shadow-lg rounded shrink-0">
           <Line :data="chartData" :options="chartOptions" />
@@ -264,6 +269,8 @@ const isLoggedIn = ref(!!userId.value)
 
 // 전세사기 데이터 토글
 const showExperienceOverlay = ref(false);
+
+const predictionFailed = ref(false)
 
 function experienceToRadius(val) {
   return 20 + val * 10;
@@ -522,6 +529,8 @@ const chartOptions = {
 async function getPrediction() {
   loading.value = true;
   error.value = null;
+  predictionFailed.value = false; // 초기화
+
   try {
     const response = await fetchPrediction({
       region_dong_name: regionDongName.value,
@@ -533,6 +542,7 @@ async function getPrediction() {
     await getPredictionBar();
   }  catch (e) {
     // 여기!
+    predictionFailed.value = true; // 실패 상태로 표시
     console.error('예측 에러:', e.response?.data?.detail || e.message);
     error.value = e.response?.data?.detail || e.message; // 필요하다면 에러 메시지 상태로 저장
   }  finally {
