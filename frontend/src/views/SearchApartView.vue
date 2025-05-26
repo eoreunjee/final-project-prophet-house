@@ -116,15 +116,19 @@
           2026년 {{ selectedApt.dongName }} m²당 AI 시세 예측
         </h2>
 
+        <div v-if="!isLoggedIn" class="bg-gray-200 h-[260px] flex items-center justify-center shadow-lg rounded shrink-0">
+          <p class="text-gray-500 text-center">로그인이 필요합니다</p>
+        </div>
+
         <!-- 예측 로딩 중 -->
-        <div v-if="isLoadingPrediction" class="flex justify-center items-center h-[260px] bg-gray-100 rounded shadow">
+        <div v-else-if="isLoadingPrediction" class="flex justify-center items-center h-[260px] bg-gray-100 rounded shadow">
           <svg class="animate-spin h-6 w-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
           </svg>
           <span class="ml-3 text-sm text-gray-600">예측 결과 불러오는 중...</span>
         </div>
-
+        
         <!-- 예측 실패 시 -->
         <div v-else-if="predictionFailed" class="bg-gray-100 h-[260px] flex items-center justify-center shadow-lg rounded shrink-0">
           <p class="text-gray-600 text-center">⚠️ 데이터 준비 중입니다.</p>
@@ -138,9 +142,7 @@
             예측치 정확도 : <span class="text-blue-600 font-bold">{{ accuracy }}%</span>
           </div>
         </div>
-        <div v-else class="bg-gray-200 h-[260px] flex items-center justify-center shadow-lg rounded shrink-0">
-          <p class="text-gray-500 text-center">로그인이 필요합니다</p>
-        </div>
+        
         <!---------------------- 예측 그래프 END -------------------->
 
         <div class="overflow-y-auto flex-1">
