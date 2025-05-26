@@ -35,7 +35,7 @@
         <label class="block mb-1">동</label>
         <select v-model="selectedDong" :disabled="!selectedGugun" class="w-full border rounded px-3 py-2">
           <option value="">선택</option>
-          <option v-for="dong in dongList" :key="dong.dongCode" :value="dong.dongCode">{{ dong.dongName }}</option>
+          <option v-for="dong in dongList" :key="dong.dongCode" :value="dong.dongName">{{ dong.dongName }}</option>
         </select>
       </div>
 
