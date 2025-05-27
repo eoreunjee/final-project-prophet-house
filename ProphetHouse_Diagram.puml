@@ -1,0 +1,72 @@
+@startuml prophet house
+skinparam classAttributeIconSize 0
+set namespaceSeparator .
+
+' 패키지 정의
+package com.ssafy.home.controller {
+  class EstatePredictionController
+  class NewsController
+  class ReviewController
+  class SearchController
+  class UserController
+}
+package com.ssafy.home.dto {
+  class Comment
+  class EstatePredictionRequest
+  class EstatePredictionResonse
+  class HomeDeal
+  class HomeInfo
+  class LoginRequest
+  class News
+  class Review
+  class ReviewEdit
+  class User
+}
+
+package com.ssafy.home.service {
+  interface AuthService
+  interface CommentService
+  interface EstatePredictionService
+  interface HomeDealService
+  interface HomeInfoService
+  interface NewsService
+  interface ReviewService
+  interface SearchService
+  interface UserService
+}
+
+package com.ssafy.home.mapper {
+  interface CommentMapper
+  interface HomeDealMapper
+  interface HomeInfoMapper
+  interface ReviewMapper
+  interface SearchMapper
+  interface UserMapper
+}
+
+' 연결 관계 표현
+UserController --> UserService
+UserController --> AuthService
+AuthService --> UserMapper
+UserService --> UserMapper
+
+ReviewController --> ReviewService
+ReviewController --> CommentService
+CommentService --> ReviewMapper
+CommentService --> CommentMapper
+ReviewService --> ReviewMapper
+ReviewService --> CommentMapper
+
+EstatePredictionController --> EstatePredictionService
+
+SearchController --> SearchService
+SearchController --> HomeDealService
+SearchController --> HomeInfoService
+
+HomeInfoService --> HomeInfoMapper
+HomeDealService --> HomeDealMapper
+SearchService --> SearchMapper
+
+NewsController --> NewsService
+
+@enduml
