@@ -17,7 +17,7 @@
           :lng="parseFloat(apt.longitude)"
         />
 
-        <template v-if="showExperienceOverlay">
+        <!-- <template v-if="showExperienceOverlay">
           <KakaoMapCustomOverlay
             v-for="(data, region) in experienceData"
             :key="region"
@@ -39,7 +39,7 @@
               {{ region }}
             </div>
           </KakaoMapCustomOverlay>
-        </template>
+        </template> -->
       </KakaoMap>
 
       <!-- <button @click="showExperienceOverlay = !showExperienceOverlay"
@@ -233,10 +233,9 @@
 import { ref, reactive, computed, watch } from 'vue'
 import axios from 'axios'
 import RealpricePrediction from '@/components/RealpricePrediction.vue'
-import { KakaoMap, KakaoMapMarker, KakaoMapCustomOverlay} from 'vue3-kakao-maps'
+import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps'
 import { useKakao } from 'vue3-kakao-maps/@utils'
 import { userId } from '@/utils/auth'
-import { experienceData, regionCoords } from "@/assets/rentalScamData";
 
 useKakao(import.meta.env.VITE_KAKAO_MAP_API_KEY)
 
@@ -348,7 +347,6 @@ const handleSelectApt = async (apt) => {
     try {
       console.log("🔍 호출 전 regionDongName:", regionDongName.value)
       await getPrediction()
-      await getPredictionBar()
     } catch (error) {
       console.error('예측 요청 실패:', error)
     } finally {

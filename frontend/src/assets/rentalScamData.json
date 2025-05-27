@@ -1,0 +1,40 @@
+{
+  "scamCounts": {
+    "서울": 5543,
+    "경기": 4400,
+    "대전": 2763,
+    "인천": 2738,
+    "부산": 2246,
+    "전남": 738,
+    "대구": 453,
+    "경북": 286,
+    "경남": 266,
+    "세종": 263,
+    "광주": 255,
+    "전북": 219,
+    "충남": 212,
+    "강원": 183,
+    "충북": 177,
+    "울산": 141,
+    "제주": 66
+  },
+  "nameMap": {
+    "Seoul": "서울",
+    "Gyeonggi-do": "경기",
+    "Daejeon": "대전",
+    "Incheon": "인천",
+    "Busan": "부산",
+    "Jeollanam-do": "전남",
+    "Daegu": "대구",
+    "Gyeongsangbuk-do": "경북",
+    "Gyeongsangnam-do": "경남",
+    "Sejong": "세종",
+    "Gwangju": "광주",
+    "Jeollabuk-do": "전북",
+    "Chungcheongnam-do": "충남",
+    "Gangwon-do": "강원",
+    "Chungcheongbuk-do": "충북",
+    "Ulsan": "울산",
+    "Jeju": "제주"
+  }
+}
