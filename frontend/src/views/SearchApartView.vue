@@ -256,6 +256,8 @@ const maxVisibleButtons = 5
 const isSearchingApt = ref(false)
 const isLoadingPrediction = ref(false)
 
+const predictionFailed = ref(false)
+
 // 아파트 목록 관련
 const aptSearchList = ref([])
 const totalAptCount = ref(0)
@@ -267,22 +269,6 @@ const selectedAptDeals = ref([])
 
 // 로그인 확인
 const isLoggedIn = ref(!!userId.value)
-
-// 전세사기 데이터 토글
-const showExperienceOverlay = ref(false);
-
-const predictionFailed = ref(false)
-
-function experienceToRadius(val) {
-  return 20 + val * 10;
-}
-function experienceToColor(val) {
-  if (val > 2.5) return "#e74c3c";
-  else if (val > 1.5) return "#f39c12";
-  else if (val > 0.7) return "#3498db";
-  else return "#2ecc71";
-}
-
 
 const validAptList = computed(() =>
   aptSearchList.value.filter(
