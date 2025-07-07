@@ -1,0 +1,5 @@
+Test Loss: 0.0002
+R-squared: 0.9266
+R-squared(%): 92.66%
+Cosine Similarity: 0.9838
+Cosine Similarity(%): 98.38%
