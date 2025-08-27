@@ -39,15 +39,15 @@ ProphetHouse는 빅데이터와 AI 기술을 활용하여 부동산 가격을 �
 
 ## 🏗️ 시스템 아키텍처
 
-![시스템 구조도](./docs/ProphetHouse_다이어그램.png)
+![시스템 구조도](ProphetHouse_다이어그램.png)
 
 ## 📊 데이터베이스 설계
 
-![ERD](./docs/ProphetHouse_ERD.png)
+![ERD](ProphetHouse_ERD.png)
 
 ## 🎬 프로젝트 시연
 
-[![시연 영상](./docs/video_thumbnail.png)](./docs/Prophet_House_시연영상_자막_.mp4)
+[시연 영상 보기](Prophet_House_시연영상_자막_.mp4)
 
 ## 📂 프로젝트 구조
 ProphetHouse/
@@ -98,28 +98,21 @@ npm start
 
 - **예측 모델**: GRU(Gated Recurrent Unit) 기반 시계열 예측
 - **데이터 전처리**: 이상치 제거 및 정규화
-- **특성 엔지니어링**: 지역, 교통, 편의시설 등 다차원 특성 추출
 
-## 📈 성능 지표
-
-- **예측 정확도**: MAE 기준 85% 이상
-- **응답 시간**: 평균 200ms 이하
-- **데이터 커버리지**: 전국 주요 도시 90% 이상
 
 ## 👥 팀원
 
 | 이름 | 역할 | GitHub |
 |------|------|--------|
-| 유승준 | Frontend, UI/UX | [@username1](https://github.com/username1) |
-| 이은지 | Backend, AI Model | [@username2](https://github.com/username2) |
+| 유승준 | Backend, Frontend | 
+| 어은지 | Backend, AI Model | 
 
 ## 📚 관련 문서
 
-- 📋 [프로젝트 발표 자료](./docs/250528_137_대전_5반_관통PJT_유승준_이은지.pptx)
-- 📐 [시스템 설계서](./docs/ProphetHouse_설계서.pdf)
-- 🎨 [화면 정의서](./docs/ProphetHouse_화면정의서.pdf)
-- 📖 [프로젝트 명세서](./docs/Prophethouse_명세서.pdf)
-
+- [📋 프로젝트 발표자료](250528_137_대전_5반_관통PJT_유승준_어은지.pdf)
+- [📐 시스템 설계서](ProphetHouse_설계서.pdf)
+- [🎨 화면정의서](ProphetHouse_화면정의서.pdf)
+- [📖 프로젝트 명세서](Prophethouse_명세서.pdf)
 ## 🏆 수상 및 성과
 
 - 🥇 SSAFY 대전캠퍼스 5반 관통 프로젝트 우수상
