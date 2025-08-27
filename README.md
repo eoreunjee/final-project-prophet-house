@@ -49,22 +49,6 @@ ProphetHouse는 빅데이터와 AI 기술을 활용하여 부동산 가격을 �
 
 [시연 영상 보기](Prophet_House_시연영상_자막_.mp4)
 
-## 📂 프로젝트 구조
-ProphetHouse/
-├── frontend/ # React 프론트엔드
-├── backend/ # Spring Boot 백엔드
-├── ai-model/ # AI 예측 모델
-├── database/ # DB 스키마 및 초기 데이터
-└── docs/ # 프로젝트 문서
-├── ProphetHouse_설계서.pdf
-├── ProphetHouse_화면정의서.pdf
-├── Prophethouse_명세서.pdf
-├── ProphetHouse_ERD.png
-├── ProphetHouse_다이어그램.png
-├── ProphetHouse_Diagram.puml
-└── Prophet_House_시연영상_자막_.mp4
-
-
 ## 🚀 Quick Start
 
 ### 1. 저장소 클론
@@ -113,10 +97,6 @@ npm start
 - [📐 시스템 설계서](ProphetHouse_설계서.pdf)
 - [🎨 화면정의서](ProphetHouse_화면정의서.pdf)
 - [📖 프로젝트 명세서](Prophethouse_명세서.pdf)
-## 🏆 수상 및 성과
-
-- 🥇 SSAFY 대전캠퍼스 5반 관통 프로젝트 우수상
-- 📊 사용자 만족도 4.5/5.0 달성
 
 ## 📱 스크린샷
 
@@ -124,30 +104,6 @@ npm start
 |-----------|---------|---------|
 | ![메인](screenshot1.png) | ![예측](screenshot2.png) | ![분석](screenshot3.png) |
 
-## 🔮 향후 계획
-
-- [ ] 모바일 앱 개발
-- [ ] 실시간 알림 서비스
-- [ ] 투자 포트폴리오 기능
-- [ ] 블록체인 기반 거래 시스템
-
-## 🤝 Contributing
-
-1. Fork this repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📞 Contact
-
-- 📧 Email: your.email@ssafy.com
-- 🐱 GitHub: [ProphetHouse](https://github.com/your-username/ProphetHouse)
-- 📝 Blog: [프로젝트 회고](https://your-blog.com/prophethouse)
 
 ---
 
