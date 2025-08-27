@@ -47,7 +47,7 @@ ProphetHouse는 빅데이터와 AI 기술을 활용하여 부동산 가격을 �
 
 ## 🎬 프로젝트 시연
 
-[시연 영상 보기](Prophet_House_시연영상_자막_.mp4)
+![시연 영상 보기](Prophet_House_시연영상_자막_.mp4)
 
 ## 🚀 Quick Start
 
@@ -93,10 +93,10 @@ npm start
 
 ## 📚 관련 문서
 
-- [📋 프로젝트 발표자료](250528_137_대전_5반_관통PJT_유승준_어은지.pdf)
-- [📐 시스템 설계서](ProphetHouse_설계서.pdf)
-- [🎨 화면정의서](ProphetHouse_화면정의서.pdf)
-- [📖 프로젝트 명세서](Prophethouse_명세서.pdf)
+- ![📋 프로젝트 발표자료](250528_13기_대전_5반_관통PJT_유승준_어은지.pdf)
+- ![📐 시스템 설계서](ProphetHouse_설계서.pdf)
+- ![🎨 화면정의서](ProphetHouse_화면정의서.pdf)
+- ![📖 프로젝트 명세서](Prophethouse_명세서.pdf)
 
 ## 📱 스크린샷
 
