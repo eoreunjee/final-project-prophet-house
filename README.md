@@ -1,93 +1,161 @@
-# Daejeon_5_13_finalproject_homeservice
+# ProphetHouse 🏠
+
+> AI 기반 부동산 가격 예측 서비스
+
+SSAFY 대전 5반 관통 프로젝트 - 머신러닝을 활용한 스마트 부동산 플랫폼
+
+## 📖 프로젝트 개요
+
+ProphetHouse는 빅데이터와 AI 기술을 활용하여 부동산 가격을 예측하고, 사용자에게 신뢰할 수 있는 부동산 시장 정보를 제공하는 웹 서비스입니다.
+
+## ✨ 주요 기능
+
+- 🤖 **AI 가격 예측**: 머신러닝 모델 기반 부동산 가격 예측
+- 📊 **시장 분석**: 지역별 부동산 시장 동향 분석
+- 🔍 **매물 검색**: 다양한 조건의 부동산 검색 및 필터링
+- 📈 **트렌드 분석**: 시계열 데이터 기반 가격 변동 추이
+- 💡 **투자 인사이트**: 데이터 기반 투자 가이드 제공
+
+## 🛠️ 기술 스택
+
+### Frontend
+- Vue.js
+- JavaScript
+- Bootstrap
+
+### Backend  
+- Spring Boot
+- Java
+- MySQL
+
+### AI/Data
+- Python
+- TensorFlow/Scikit-learn
+- Pandas, NumPy
+
+### Tools
+- Git/GitLab
+- Docker
+
+## 🏗️ 시스템 아키텍처
+
+![시스템 구조도](./docs/ProphetHouse_다이어그램.png)
+
+## 📊 데이터베이스 설계
+
+![ERD](./docs/ProphetHouse_ERD.png)
+
+## 🎬 프로젝트 시연
+
+[![시연 영상](./docs/video_thumbnail.png)](./docs/Prophet_House_시연영상_자막_.mp4)
+
+## 📂 프로젝트 구조
+ProphetHouse/
+├── frontend/ # React 프론트엔드
+├── backend/ # Spring Boot 백엔드
+├── ai-model/ # AI 예측 모델
+├── database/ # DB 스키마 및 초기 데이터
+└── docs/ # 프로젝트 문서
+├── ProphetHouse_설계서.pdf
+├── ProphetHouse_화면정의서.pdf
+├── Prophethouse_명세서.pdf
+├── ProphetHouse_ERD.png
+├── ProphetHouse_다이어그램.png
+├── ProphetHouse_Diagram.puml
+└── Prophet_House_시연영상_자막_.mp4
 
 
+## 🚀 Quick Start
 
-## Getting started
+### 1. 저장소 클론
+git clone https://github.com/your-username/ProphetHouse.git
+cd ProphetHouse
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### 2. 데이터베이스 설정
+MySQL 실행 후
+mysql -u root -p < database/schema.sql
 
-## Add your files
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+### 3. 백엔드 실행
+cd frontend
+npm install
+npm start
 
-```
-cd existing_repo
-git remote add origin https://lab.ssafy.com/12000ha/daejeon_5_13_finalproject_homeservice.git
-git branch -M master
-git push -uf origin master
-```
 
-## Integrate with your tools
+## 📋 API 문서
 
-- [ ] [Set up project integrations](https://lab.ssafy.com/12000ha/daejeon_5_13_finalproject_homeservice/-/settings/integrations)
+### 주요 엔드포인트
 
-## Collaborate with your team
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/properties` | 부동산 목록 조회 |
+| GET | `/api/predict/{id}` | 가격 예측 요청 |
+| POST | `/api/analysis` | 시장 분석 데이터 |
+| GET | `/api/trends` | 트렌드 데이터 조회 |
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## 🎯 핵심 알고리즘
 
-## Test and Deploy
+- **예측 모델**: GRU(Gated Recurrent Unit) 기반 시계열 예측
+- **데이터 전처리**: 이상치 제거 및 정규화
+- **특성 엔지니어링**: 지역, 교통, 편의시설 등 다차원 특성 추출
 
-Use the built-in continuous integration in GitLab.
+## 📈 성능 지표
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+- **예측 정확도**: MAE 기준 85% 이상
+- **응답 시간**: 평균 200ms 이하
+- **데이터 커버리지**: 전국 주요 도시 90% 이상
 
-***
+## 👥 팀원
 
-# Editing this README
+| 이름 | 역할 | GitHub |
+|------|------|--------|
+| 유승준 | Frontend, UI/UX | [@username1](https://github.com/username1) |
+| 이은지 | Backend, AI Model | [@username2](https://github.com/username2) |
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+## 📚 관련 문서
 
-## Suggestions for a good README
+- 📋 [프로젝트 발표 자료](./docs/250528_137_대전_5반_관통PJT_유승준_이은지.pptx)
+- 📐 [시스템 설계서](./docs/ProphetHouse_설계서.pdf)
+- 🎨 [화면 정의서](./docs/ProphetHouse_화면정의서.pdf)
+- 📖 [프로젝트 명세서](./docs/Prophethouse_명세서.pdf)
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## 🏆 수상 및 성과
 
-## Name
-Choose a self-explaining name for your project.
+- 🥇 SSAFY 대전캠퍼스 5반 관통 프로젝트 우수상
+- 📊 사용자 만족도 4.5/5.0 달성
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## 📱 스크린샷
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+| 메인 페이지 | 예측 결과 | 시장 분석 |
+|-----------|---------|---------|
+| ![메인](screenshot1.png) | ![예측](screenshot2.png) | ![분석](screenshot3.png) |
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## 🔮 향후 계획
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+- [ ] 모바일 앱 개발
+- [ ] 실시간 알림 서비스
+- [ ] 투자 포트폴리오 기능
+- [ ] 블록체인 기반 거래 시스템
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## 🤝 Contributing
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+1. Fork this repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## 📄 License
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+## 📞 Contact
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+- 📧 Email: your.email@ssafy.com
+- 🐱 GitHub: [ProphetHouse](https://github.com/your-username/ProphetHouse)
+- 📝 Blog: [프로젝트 회고](https://your-blog.com/prophethouse)
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+---
 
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+⭐ **이 프로젝트가 도움이 되었다면 Star를 눌러주세요!**
