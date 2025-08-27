@@ -46,7 +46,7 @@ ProphetHouse는 빅데이터와 AI 기술을 활용하여 부동산 가격을 �
 
 ## 🎬 프로젝트 시연
 
-![시연 영상 보기](Prophet_House_시연영상_자막_.mp4)
+[시연 영상 보기](ProphetHouse_시연영상.mp4)
 
 ## 🚀 Quick Start
 
