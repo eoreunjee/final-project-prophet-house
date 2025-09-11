@@ -29,7 +29,7 @@ ProphetHouse는 빅데이터와 AI 기술을 활용하여 부동산 가격을 �
 
 ### AI/Data
 - Python
-- TensorFlow/Scikit-learn
+- Pytorch/Scikit-learn
 - Pandas, NumPy
 
 ### Tools
